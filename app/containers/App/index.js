@@ -15,7 +15,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, HashRouter } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -71,19 +71,23 @@ export default function App() {
       >
         <meta name="description" content="ReLinks - Found out Related Links between papers" />
       </Helmet>
-      <Route component={Header} />
-      <Grid container justify="center" style={styles.mainApp}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <CardLayoutContainer>
-            <CardLayoutRoute exact path="/searchResult/:text" component={SearchResultContainer} />
-            <CardLayoutRoute exact path="/searchResultFromArxiv/:text" component={SearchResultContainer} />
-            <CardLayoutRoute exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
-          </CardLayoutContainer>
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Grid>
-      <Route component={Footer} />
+      <HashRouter>
+        <div>
+          <Route component={Header} />
+          <Grid container justify="center" style={styles.mainApp}>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <CardLayoutContainer>
+                <CardLayoutRoute exact path="/searchResult/:text" component={SearchResultContainer} />
+                <CardLayoutRoute exact path="/searchResultFromArxiv/:text" component={SearchResultContainer} />
+                <CardLayoutRoute exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
+              </CardLayoutContainer>
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Grid>
+          <Route component={Footer} />
+        </div>
+      </HashRouter>
     </AppWrapper>
   );
 }
