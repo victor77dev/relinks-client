@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import grey from '@material-ui/core/colors/grey';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
-import SearchBox from 'components/SearchBox';
+import SearchBoxContainer from 'containers/SearchBoxContainer';
 
 // Creating theme with following colors
 // https://material.io/tools/color/#!/?view.left=0&view.right=0&secondary.color=455A64&primary.color=212121
@@ -95,7 +95,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
             <Typography variant="title" color="inherit">
               ReLinks
             </Typography>
-            <SearchBox theme={theme} />
+            <SearchBoxContainer theme={theme} />
           </Toolbar>
         </AppBar>
       </MuiThemeProvider>

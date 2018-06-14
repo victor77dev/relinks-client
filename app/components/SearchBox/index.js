@@ -31,7 +31,7 @@ const styles = (theme) => ({
 
 class SearchBox extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, onChange, onKeyPress } = this.props;
     return (
       <MuiThemeProvider theme={theme}>
         <TextField
@@ -39,6 +39,8 @@ class SearchBox extends React.PureComponent { // eslint-disable-line react/prefe
           className={classes.textFieldOuter}
           margin="normal"
           placeholder={messages.placeHolder.defaultMessage}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
           InputProps={{
             className: classes.textField,
             startAdornment: (
@@ -54,6 +56,8 @@ class SearchBox extends React.PureComponent { // eslint-disable-line react/prefe
 }
 
 SearchBox.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onKeyPress: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
