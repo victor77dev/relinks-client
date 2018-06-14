@@ -75,7 +75,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
 
   render() {
     const { anchorEl } = this.state;
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const buttons = ['Home', 'Testing'];
     return (
       <MuiThemeProvider theme={theme}>
@@ -95,7 +95,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
             <Typography variant="title" color="inherit">
               ReLinks
             </Typography>
-            <SearchBoxContainer theme={theme} />
+            <SearchBoxContainer theme={theme} history={history} />
           </Toolbar>
         </AppBar>
       </MuiThemeProvider>
