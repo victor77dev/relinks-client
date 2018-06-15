@@ -5,7 +5,7 @@ import { updateLoaded, updateError, paperAdded, addPaperError, stopEdit } from '
 import { getLinksDetail } from 'containers/PaperLinksContainer/actions';
 
 // const config = require('../config.json')
-const apiUrl = 'http://localhost:4000';
+const apiUrl = 'https://relinks.herokuapp.com';
 
 export function* updatePaperInfo(action) {
   const { paperId, paperInfo } = action;

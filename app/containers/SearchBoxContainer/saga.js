@@ -4,7 +4,7 @@ import { searchLoaded, searchError, searchLoadedFromArxiv, searchErrorFromArxiv 
 import { SEARCH_PAPER, SEARCH_ARXIV_PAPER } from 'containers/SearchBoxContainer/constants';
 
 // const config = require('../config.json')
-const apiUrl = 'http://localhost:4000';
+const apiUrl = 'https://relinks.herokuapp.com';
 
 export function* searchPaper(action) {
   const text = action.text;

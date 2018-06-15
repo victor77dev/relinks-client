@@ -4,7 +4,7 @@ import { getLinksLoading, getLinksLoaded, getLinksError } from 'containers/Paper
 import { GET_LINK } from 'containers/PaperLinksContainer/constants';
 
 // const config = require('../config.json')
-const apiUrl = 'http://localhost:4000';
+const apiUrl = 'https://relinks.herokuapp.com';
 
 export function* getLinks(action) {
   yield put(getLinksLoading());
