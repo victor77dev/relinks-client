@@ -24,7 +24,8 @@ function searchBoxContainerReducer(state = initialState, action) {
         .set('text', action.text);
     case SEARCH_LOADED:
       return state
-        .set('searchResult', action.result);
+        .set('searchResult', action.result)
+        .set('searchError', null);
     case SEARCH_ERROR:
       return state
         .set('searchResult', null)
