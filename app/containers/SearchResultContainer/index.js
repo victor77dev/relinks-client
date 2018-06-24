@@ -21,14 +21,14 @@ import saga from './saga';
 
 export class SearchResultContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { searchResult } = this.props;
+    const { searchResult, history } = this.props;
     return (
       <div>
         <Helmet>
           <title>Search Result</title>
           <meta name="description" content="Search Result" />
         </Helmet>
-        <SearchResult searchResult={searchResult} />
+        <SearchResult searchResult={searchResult} history={history} />
       </div>
     );
   }
@@ -36,6 +36,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
 
 SearchResultContainer.propTypes = {
   searchResult: PropTypes.array,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -19,13 +19,14 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SearchResultContainer from 'containers/SearchResultContainer/Loadable';
+import PaperLinksContainer from 'containers/PaperLinksContainer/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import Grid from '@material-ui/core/Grid';
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
+  max-width: calc(1080px + 16px * 2);
   margin: 0 auto;
   display: flex;
   min-height: 100%;
@@ -56,6 +57,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/searchResult" component={SearchResultContainer} />
+          <Route exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
           <Route component={NotFoundPage} />
         </Switch>
       </Grid>
