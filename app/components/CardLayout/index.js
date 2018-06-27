@@ -23,6 +23,11 @@ const styles = (theme) => ({
 });
 
 class CardLayout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.goToPath = this.goToPath.bind(this);
+  }
+
   // Get authors name from arxiv data; if not exists, find in ref data
   getAuthors = (paperData) => {
     if (paperData.arxiv.length !== 0) {
@@ -33,17 +38,34 @@ class CardLayout extends React.PureComponent {
     return 'No Authors data in ReLinks.';
   }
 
+  goToPath(path) {
+    const { goToPath, setEditMode } = this.props;
+    goToPath(path);
+    setEditMode(null, false);
+  }
+
   render() {
-    const { classes, paperData, theme, linkDetail, linkType, goToPath } = this.props;
+    const { classes, paperData, theme, linkDetail, linkType, setEditMode, editModeData } = this.props;
     const { title } = paperData;
+    /* eslint-disable no-underscore-dangle */
+    const paperId = paperData._id;
     const authors = this.getAuthors(paperData);
+    const { editPaper, editMode } = editModeData;
+    const currEditMode = paperId === editPaper ? editMode : false;
     return (
       <MuiThemeProvider theme={theme}>
         <Card className={classes.card}>
-          <ReLinksCardHeader title={title} authors={authors} />
-          <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} />
-          <ReLinksCardContentExt paperData={paperData} />
-          <ReLinksCardActions paperData={paperData} goToPath={goToPath} />
+          <ReLinksCardHeader
+            title={title}
+            authors={authors}
+            paperId={paperId}
+            goToPath={this.goToPath}
+            setEditMode={setEditMode}
+            editMode={currEditMode}
+          />
+          <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} editMode={currEditMode} />
+          <ReLinksCardContentExt paperData={paperData} editMode={currEditMode} />
+          <ReLinksCardActions paperData={paperData} goToPath={this.goToPath} editMode={currEditMode} />
         </Card>
       </MuiThemeProvider>
     );
@@ -57,6 +79,8 @@ CardLayout.propTypes = {
   linkType: PropTypes.string,
   theme: PropTypes.object,
   goToPath: PropTypes.func,
+  setEditMode: PropTypes.func,
+  editModeData: PropTypes.object,
 };
 
 export default withStyles(styles)(CardLayout);

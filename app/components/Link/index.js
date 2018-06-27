@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 
-import CardLayout from 'components/CardLayout';
+import CardLayoutContainer from 'containers/CardLayoutContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -21,7 +21,7 @@ const theme = createMuiTheme({
 class Link extends React.PureComponent {
   render() {
     const { paperData, goToPath, linkDetail, linkType } = this.props;
-    return <CardLayout paperData={paperData} linkDetail={linkDetail} linkType={linkType} theme={theme} goToPath={goToPath} />;
+    return <CardLayoutContainer paperData={paperData} linkDetail={linkDetail} linkType={linkType} theme={theme} goToPath={goToPath} />;
   }
 }
 
