@@ -54,19 +54,6 @@ const ReLinksCardActions = (props) => {
     <CardActions className={classes.actions} disableActionSpacing>
       {buttonList.map((button) => {
         const { text, func, id } = button;
-        if (!button.func) {
-          return (
-            <Button
-              key={id}
-              size="small"
-              color="primary"
-              className={classes.button}
-              variant={variant}
-            >
-              {text}
-            </Button>
-          );
-        }
         return (
           <Button
             key={id}
@@ -79,8 +66,7 @@ const ReLinksCardActions = (props) => {
             {text}
           </Button>
         );
-      })
-    }
+      })}
     </CardActions>
   );
 };
