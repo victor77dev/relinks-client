@@ -178,12 +178,14 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
     setTimeout(() => {
       this.setCurrLinkDivSize(this.currLinkDiv.offsetHeight, this.currLinkDiv.offsetWidth);
       this.setNextLinkDivSize(this.nextLinkDiv.offsetHeight, this.nextLinkDiv.offsetWidth);
-    }, 1);
+    }, 500);
   }
 
   componentWillUpdate() {
-    this.setCurrLinkDivSize(this.currLinkDiv.offsetHeight, this.currLinkDiv.offsetWidth);
-    this.setNextLinkDivSize(this.nextLinkDiv.offsetHeight, this.nextLinkDiv.offsetWidth);
+    setTimeout(() => {
+      this.setCurrLinkDivSize(this.currLinkDiv.offsetHeight, this.currLinkDiv.offsetWidth);
+      this.setNextLinkDivSize(this.nextLinkDiv.offsetHeight, this.nextLinkDiv.offsetWidth);
+    }, 500);
   }
 
   setCurrLinkDivSize(height, width) {
