@@ -11,10 +11,11 @@ import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const styles = {
+const styles = (theme) => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -22,6 +23,51 @@ const styles = {
   menu: {
     top: 48,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+// Create the menu for edit paper info / button for edit done
+const CardHeaderOption = (props) => {
+  const variant = 'contained';
+  const { editMode, anchorEl, endEdit, handleMenuClick, handleMenuClose, goToEdit, classes } = props;
+  return (
+    editMode ?
+      <Button
+        key="Done"
+        size="small"
+        color="primary"
+        className={classes.button}
+        variant={variant}
+        onClick={endEdit}
+      >
+        Done
+      </Button>
+    : <div>
+      <IconButton onClick={handleMenuClick} className={classes.menuButton} color="inherit" aria-label="Menu">
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        className={classes.menu}
+      >
+        <MenuItem key="EditInfo" onClick={goToEdit}>Edit Info</MenuItem>;
+      </Menu>
+    </div>
+  );
+};
+
+CardHeaderOption.propTypes = {
+  editMode: PropTypes.bool,
+  anchorEl: PropTypes.object,
+  endEdit: PropTypes.func,
+  handleMenuClick: PropTypes.func,
+  handleMenuClose: PropTypes.func,
+  goToEdit: PropTypes.func,
+  classes: PropTypes.object.isRequired,
 };
 
 class ReLinksCardHeader extends React.PureComponent {
@@ -43,27 +89,28 @@ class ReLinksCardHeader extends React.PureComponent {
     setEditMode(paperId, true);
   }
 
+  endEdit = () => {
+    const { setEditMode } = this.props;
+    setEditMode(null, false);
+  }
+
   render() {
     const { anchorEl } = this.state;
-    const { classes, title, authors } = this.props;
+    const { classes, title, authors, editMode } = this.props;
     return (
       <CardHeader
         title={title}
         subheader={authors}
         action={
-          <div>
-            <IconButton onClick={this.handleMenuClick} className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={this.handleMenuClose}
-              className={classes.menu}
-            >
-              <MenuItem key="EditInfo" onClick={this.goToEdit}>Edit Info</MenuItem>;
-            </Menu>
-          </div>
+          <CardHeaderOption
+            editMode={editMode}
+            anchorEl={anchorEl}
+            endEdit={this.endEdit}
+            handleMenuClick={this.handleMenuClick}
+            handleMenuClose={this.handleMenuClose}
+            goToEdit={this.goToEdit}
+            classes={classes}
+          />
         }
       />
     );
@@ -76,6 +123,7 @@ ReLinksCardHeader.propTypes = {
   authors: PropTypes.string,
   paperId: PropTypes.string,
   setEditMode: PropTypes.func,
+  editMode: PropTypes.bool,
 };
 
 export default withStyles(styles)(ReLinksCardHeader);
