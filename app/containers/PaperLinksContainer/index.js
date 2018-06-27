@@ -20,6 +20,11 @@ import reducer from './reducer';
 import saga from './saga';
 
 export class PaperLinksContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.goToPath = this.goToPath.bind(this);
+  }
+
   componentWillMount() {
     const { callGetLinksDetail, match } = this.props;
     const { paperId } = match.params;
@@ -35,8 +40,13 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
     }
   }
 
+  goToPath(path) {
+    const { history } = this.props;
+    history.push(path);
+  }
+
   render() {
-    const { paperLink, match, history } = this.props;
+    const { paperLink, match } = this.props;
     const { paperId } = match.params;
     return (
       <div>
@@ -44,7 +54,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
           <title>Paper Links</title>
           <meta name="description" content="Paper Links" />
         </Helmet>
-        <PaperLinks paperId={paperId} paperLink={paperLink} history={history} />
+        <PaperLinks paperId={paperId} paperLink={paperLink} goToPath={this.goToPath} />
       </div>
     );
   }

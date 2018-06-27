@@ -34,7 +34,7 @@ class CardLayout extends React.PureComponent {
   }
 
   render() {
-    const { classes, paperData, theme, linkDetail, linkType, history } = this.props;
+    const { classes, paperData, theme, linkDetail, linkType, goToPath } = this.props;
     const { title } = paperData;
     const authors = this.getAuthors(paperData);
     return (
@@ -43,7 +43,7 @@ class CardLayout extends React.PureComponent {
           <ReLinksCardHeader title={title} authors={authors} />
           <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} />
           <ReLinksCardContentExt paperData={paperData} />
-          <ReLinksCardActions paperData={paperData} history={history} />
+          <ReLinksCardActions paperData={paperData} goToPath={goToPath} />
         </Card>
       </MuiThemeProvider>
     );
@@ -56,7 +56,7 @@ CardLayout.propTypes = {
   linkDetail: PropTypes.object,
   linkType: PropTypes.string,
   theme: PropTypes.object,
-  history: PropTypes.object,
+  goToPath: PropTypes.func,
 };
 
 export default withStyles(styles)(CardLayout);

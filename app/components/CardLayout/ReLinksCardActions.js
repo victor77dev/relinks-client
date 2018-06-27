@@ -24,7 +24,7 @@ const styles = (theme) => ({
 // Card Actions in ReLinks
 const ReLinksCardActions = (props) => {
   const checkPaperOnClick = (id) => {
-    props.history.push(`/paperLinks/${id}`);
+    props.goToPath(`/paperLinks/${id}`);
   };
 
   const addPaperOnClick = (id) => {

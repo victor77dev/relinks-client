@@ -16,12 +16,12 @@ import messages from './messages';
 /* eslint-disable no-underscore-dangle */
 class SearchResult extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { searchResult, history } = this.props;
+    const { searchResult, goToPath } = this.props;
     let paperList;
     if (!searchResult || searchResult.length === 0) {
       paperList = <h3>Cannot find related paper in ReLinks</h3>;
     } else {
-      paperList = searchResult.map((data) => <Paper paperData={data} key={data._id} history={history} />);
+      paperList = searchResult.map((data) => <Paper paperData={data} key={data._id} goToPath={goToPath} />);
     }
 
     return (
@@ -37,7 +37,7 @@ class SearchResult extends React.PureComponent { // eslint-disable-line react/pr
 
 SearchResult.propTypes = {
   searchResult: PropTypes.array,
-  history: PropTypes.object,
+  goToPath: PropTypes.func,
 };
 
 export default SearchResult;

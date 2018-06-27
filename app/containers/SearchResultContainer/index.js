@@ -20,15 +20,25 @@ import reducer from './reducer';
 import saga from './saga';
 
 export class SearchResultContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.goToPath = this.goToPath.bind(this);
+  }
+
+  goToPath(path) {
+    const { history } = this.props;
+    history.push(path);
+  }
+
   render() {
-    const { searchResult, history } = this.props;
+    const { searchResult } = this.props;
     return (
       <div>
         <Helmet>
           <title>Search Result</title>
           <meta name="description" content="Search Result" />
         </Helmet>
-        <SearchResult searchResult={searchResult} history={history} />
+        <SearchResult searchResult={searchResult} goToPath={this.goToPath} />
       </div>
     );
   }

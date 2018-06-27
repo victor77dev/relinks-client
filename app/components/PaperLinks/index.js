@@ -196,7 +196,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
   }
 
   render() {
-    const { paperLink, history, classes } = this.props;
+    const { paperLink, goToPath, classes } = this.props;
     const currLineStart = this.state.currLinkDivWidth * 0.02;
     const currLineEnd = this.state.currLinkDivWidth * 0.1;
     const currLineMiddle = this.state.currLinkDivHeight / 2;
@@ -223,7 +223,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
     } else {
       prevPaperList = paperLink.previous.map((linkDetail, index) => {
         const data = paperLink.previousPaper[index];
-        return (<Link paperData={data} linkDetail={linkDetail} linkType="previous" key={data._id} history={history} />);
+        return (<Link paperData={data} linkDetail={linkDetail} linkType="previous" key={data._id} goToPath={goToPath} />);
       });
     }
 
@@ -236,7 +236,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
           paperData={data}
           linkType="current"
           key={data._id}
-          history={history}
+          goToPath={goToPath}
         />
       ));
     }
@@ -247,7 +247,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
     } else {
       nextPaperList = paperLink.next.map((linkDetail, index) => {
         const data = paperLink.nextPaper[index];
-        return (<Link paperData={data} linkDetail={linkDetail} linkType="next" key={data._id} history={history} />);
+        return (<Link paperData={data} linkDetail={linkDetail} linkType="next" key={data._id} goToPath={goToPath} />);
       });
     }
 
@@ -271,7 +271,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
 
 PaperLinks.propTypes = {
   paperLink: PropTypes.object,
-  history: PropTypes.object,
+  goToPath: PropTypes.func,
   classes: PropTypes.object,
 };
 

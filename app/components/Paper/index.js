@@ -20,14 +20,14 @@ const theme = createMuiTheme({
 
 class Paper extends React.PureComponent {
   render() {
-    const { paperData, history } = this.props;
-    return <CardLayout paperData={paperData} theme={theme} history={history} />;
+    const { paperData, goToPath } = this.props;
+    return <CardLayout paperData={paperData} theme={theme} goToPath={goToPath} />;
   }
 }
 
 Paper.propTypes = {
   paperData: PropTypes.object,
-  history: PropTypes.object,
+  goToPath: PropTypes.func,
 };
 
 export default Paper;
