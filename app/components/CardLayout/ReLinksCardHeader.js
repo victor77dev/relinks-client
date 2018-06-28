@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import TextField from '@material-ui/core/TextField';
 
 const styles = (theme) => ({
   menuButton: {
@@ -26,7 +27,36 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing.unit,
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '80%',
+  },
 });
+
+// Create Title / Title edit TextField
+const CardHeaderTitle = (props) => {
+  const { editMode, title, handleChange, classes } = props;
+  return (
+    editMode ?
+      <TextField
+        id="title"
+        label="Title"
+        className={classes.textField}
+        value={title}
+        onChange={handleChange('title')}
+        margin="normal"
+      />
+    : title
+  );
+};
+
+CardHeaderTitle.propTypes = {
+  editMode: PropTypes.bool,
+  title: PropTypes.string,
+  handleChange: PropTypes.func,
+  classes: PropTypes.object.isRequired,
+};
 
 // Create the menu for edit paper info / button for edit done
 const CardHeaderOption = (props) => {
@@ -83,6 +113,12 @@ class ReLinksCardHeader extends React.PureComponent {
     this.setState({ anchorEl: null });
   };
 
+  handleChange = (name) => (event) => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
   goToEdit = () => {
     const { paperId, setEditMode } = this.props;
     this.handleMenuClose();
@@ -99,7 +135,7 @@ class ReLinksCardHeader extends React.PureComponent {
     const { classes, title, authors, editMode } = this.props;
     return (
       <CardHeader
-        title={title}
+        title={<CardHeaderTitle editMode={editMode} title={title} handleChange={this.handleChange} classes={classes} />}
         subheader={authors}
         action={
           <CardHeaderOption
