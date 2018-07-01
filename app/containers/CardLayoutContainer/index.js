@@ -13,7 +13,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectCardLayoutMode } from './selectors';
-import { setEditMode, updatePaperInfo } from './actions';
+import { setEditMode, updatePaperInfo, startEdit } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -31,7 +31,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { children, setEditModeAction, editModeData } = this.props;
+    const { children, setEditModeAction, startEditAction, editModeData } = this.props;
     return (
       <div>
         {
@@ -40,6 +40,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
               React.cloneElement(child, {
                 editModeData,
                 setEditMode: setEditModeAction,
+                startEdit: startEditAction,
                 updatePaperData: this.updatePaperData,
               })
             )
@@ -53,6 +54,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
 CardLayoutContainer.propTypes = {
   children: PropTypes.array,
   setEditModeAction: PropTypes.func,
+  startEditAction: PropTypes.func,
   updatePaperInfoAction: PropTypes.func,
   editModeData: PropTypes.object,
 };
@@ -66,10 +68,23 @@ function mapDispatchToProps(dispatch) {
     setEditModeAction: (paperId, value) => {
       dispatch(setEditMode(paperId, value));
     },
+    startEditAction: () => {
+      dispatch(startEdit());
+    },
     updatePaperInfoAction: (paperId, paperData, updateData) => {
       const newPaperData = paperData;
       Object.keys(updateData).every(
-        (key) => (newPaperData[key] = updateData[key])
+        (key) => {
+          if (key === 'title') {
+            if (newPaperData.arxiv.length > 0) {
+              newPaperData.arxiv.slice(-1)[0].title = updateData.title;
+            }
+            if (newPaperData.ref.length > 0) {
+              newPaperData.ref.slice(-1)[0].title = updateData.title;
+            }
+          }
+          return (newPaperData[key] = updateData[key]);
+        }
       );
       dispatch(updatePaperInfo(paperId, newPaperData));
     },

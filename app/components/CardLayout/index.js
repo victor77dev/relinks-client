@@ -53,12 +53,12 @@ class CardLayout extends React.PureComponent {
   }
 
   render() {
-    const { classes, paperData, theme, linkDetail, linkType, setEditMode, editModeData } = this.props;
+    const { classes, paperData, theme, linkDetail, linkType, setEditMode, startEdit, editModeData } = this.props;
     const { title } = paperData;
     /* eslint-disable no-underscore-dangle */
     const paperId = paperData._id;
     const authors = this.getAuthors(paperData);
-    const { editPaper, editMode } = editModeData;
+    const { editPaper, editMode, editStarted } = editModeData;
     const currEditMode = paperId === editPaper ? editMode : false;
     return (
       <MuiThemeProvider theme={theme}>
@@ -73,7 +73,9 @@ class CardLayout extends React.PureComponent {
             paperId={paperId}
             goToPath={this.goToPath}
             setEditMode={setEditMode}
+            startEdit={startEdit}
             editMode={currEditMode}
+            editStarted={editStarted}
             updatePaperData={this.updatePaperData}
           />
           <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} editMode={currEditMode} />
@@ -93,6 +95,7 @@ CardLayout.propTypes = {
   theme: PropTypes.object,
   goToPath: PropTypes.func,
   setEditMode: PropTypes.func,
+  startEdit: PropTypes.func,
   updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };

@@ -111,12 +111,14 @@ class ReLinksCardHeader extends React.PureComponent {
 
   render() {
     const { anchorEl } = this.state;
-    const { classes, title, authors, editMode } = this.props;
+    const { classes, title, authors, editMode, startEdit, editStarted } = this.props;
     return (
       <CardHeader
         title={
           <CardHeaderTitle
             editMode={editMode}
+            editStarted={editStarted}
+            startEdit={startEdit}
             sendEdit={this.sendEdit}
             title={title}
             handleChange={this.handleChange}
@@ -146,7 +148,9 @@ ReLinksCardHeader.propTypes = {
   authors: PropTypes.string,
   paperId: PropTypes.string,
   setEditMode: PropTypes.func,
+  startEdit: PropTypes.func,
   editMode: PropTypes.bool,
+  editStarted: PropTypes.bool,
   updatePaperData: PropTypes.func,
 };
 

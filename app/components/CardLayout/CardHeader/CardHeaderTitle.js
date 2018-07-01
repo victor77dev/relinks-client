@@ -34,27 +34,18 @@ const styles = (theme) => ({
 
 // Create Title / Title edit TextField
 class CardHeaderTitle extends React.PureComponent {
-  state = {
-    editStarted: false,
-  };
-
   startEdit = () => {
-    this.setState({ editStarted: true });
-  };
-
-  endEdit = () => {
-    this.setState({ editStarted: false });
-  };
+    const { startEdit } = this.props;
+    startEdit();
+  }
 
   sendEdit = () => {
     const { sendEdit } = this.props;
-    this.endEdit();
     sendEdit();
   }
 
   render() {
-    const { editMode, title, handleChange, classes } = this.props;
-    const { editStarted } = this.state;
+    const { editMode, editStarted, title, handleChange, classes } = this.props;
     // Show title if "Edit Info" is not pressed
     if (!editMode) {
       return title;
@@ -94,7 +85,9 @@ class CardHeaderTitle extends React.PureComponent {
 
 CardHeaderTitle.propTypes = {
   editMode: PropTypes.bool,
+  editStarted: PropTypes.bool,
   sendEdit: PropTypes.func,
+  startEdit: PropTypes.func,
   title: PropTypes.string,
   handleChange: PropTypes.func,
   classes: PropTypes.object.isRequired,

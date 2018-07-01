@@ -19,7 +19,8 @@ const makeSelectCardLayoutMode = () => createSelector(
   (cardModeState) => {
     const editPaper = cardModeState.get('editPaper');
     const editMode = cardModeState.get('editMode');
-    return { editPaper, editMode };
+    const editStarted = cardModeState.get('editStarted');
+    return { editPaper, editMode, editStarted };
   }
 );
 

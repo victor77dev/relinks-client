@@ -46,7 +46,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { paperLink, match, setEditMode, editModeData, updatePaperData } = this.props;
+    const { paperLink, match, setEditMode, editModeData, updatePaperData, startEdit } = this.props;
     const { paperId } = match.params;
     return (
       <div>
@@ -59,6 +59,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
           paperLink={paperLink}
           goToPath={this.goToPath}
           setEditMode={setEditMode}
+          startEdit={startEdit}
           editModeData={editModeData}
           updatePaperData={updatePaperData}
         />
@@ -73,6 +74,7 @@ PaperLinksContainer.propTypes = {
   history: PropTypes.object,
   callGetLinksDetail: PropTypes.func,
   setEditMode: PropTypes.func,
+  startEdit: PropTypes.func,
   updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };

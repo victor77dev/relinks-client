@@ -20,13 +20,14 @@ const theme = createMuiTheme({
 
 class Paper extends React.PureComponent {
   render() {
-    const { paperData, goToPath, setEditMode, editModeData, updatePaperData } = this.props;
+    const { paperData, goToPath, setEditMode, editModeData, updatePaperData, startEdit } = this.props;
     return (
       <CardLayout
         paperData={paperData}
         theme={theme}
         goToPath={goToPath}
         setEditMode={setEditMode}
+        startEdit={startEdit}
         editModeData={editModeData}
         updatePaperData={updatePaperData}
       />
@@ -38,6 +39,7 @@ Paper.propTypes = {
   paperData: PropTypes.object,
   goToPath: PropTypes.func,
   setEditMode: PropTypes.func,
+  startEdit: PropTypes.func,
   updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };

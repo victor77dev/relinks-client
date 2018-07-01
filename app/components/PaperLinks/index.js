@@ -196,7 +196,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
   }
 
   render() {
-    const { paperLink, goToPath, classes, setEditMode, editModeData, updatePaperData } = this.props;
+    const { paperLink, goToPath, classes, setEditMode, editModeData, updatePaperData, startEdit } = this.props;
     const currLineStart = this.state.currLinkDivWidth * 0.02;
     const currLineEnd = this.state.currLinkDivWidth * 0.1;
     const currLineMiddle = this.state.currLinkDivHeight / 2;
@@ -231,6 +231,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
             key={data._id}
             goToPath={goToPath}
             setEditMode={setEditMode}
+            startEdit={startEdit}
             editModeData={editModeData}
             updatePaperData={updatePaperData}
           />
@@ -249,6 +250,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
           key={data._id}
           goToPath={goToPath}
           setEditMode={setEditMode}
+          startEdit={startEdit}
           editModeData={editModeData}
           updatePaperData={updatePaperData}
         />
@@ -269,6 +271,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
             key={data._id}
             goToPath={goToPath}
             setEditMode={setEditMode}
+            startEdit={startEdit}
             editModeData={editModeData}
             updatePaperData={updatePaperData}
           />
@@ -299,6 +302,7 @@ PaperLinks.propTypes = {
   goToPath: PropTypes.func,
   classes: PropTypes.object,
   setEditMode: PropTypes.func,
+  startEdit: PropTypes.func,
   updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };

@@ -50,8 +50,8 @@ const CardLayoutRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={
       (props) => {
-        const { setEditMode, editModeData, updatePaperData } = rest;
-        const routeProps = { setEditMode, editModeData, updatePaperData, ...props };
+        const { setEditMode, editModeData, updatePaperData, startEdit } = rest;
+        const routeProps = { setEditMode, editModeData, updatePaperData, startEdit, ...props };
         return <Component {...routeProps} />;
       }
     }
