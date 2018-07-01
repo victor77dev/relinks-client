@@ -14,7 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import TextField from '@material-ui/core/TextField';
+
+import CardHeaderTitle from './CardHeader/CardHeaderTitle';
 
 const styles = (theme) => ({
   menuButton: {
@@ -27,36 +28,7 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing.unit,
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: '80%',
-  },
 });
-
-// Create Title / Title edit TextField
-const CardHeaderTitle = (props) => {
-  const { editMode, title, handleChange, classes } = props;
-  return (
-    editMode ?
-      <TextField
-        id="title"
-        label="Title"
-        className={classes.textField}
-        value={title}
-        onChange={handleChange('title')}
-        margin="normal"
-      />
-    : title
-  );
-};
-
-CardHeaderTitle.propTypes = {
-  editMode: PropTypes.bool,
-  title: PropTypes.string,
-  handleChange: PropTypes.func,
-  classes: PropTypes.object.isRequired,
-};
 
 // Create the menu for edit paper info / button for edit done
 const CardHeaderOption = (props) => {
@@ -103,6 +75,7 @@ CardHeaderOption.propTypes = {
 class ReLinksCardHeader extends React.PureComponent {
   state = {
     anchorEl: null,
+    title: this.props.title,
   };
 
   handleMenuClick = (event) => {
@@ -125,6 +98,12 @@ class ReLinksCardHeader extends React.PureComponent {
     setEditMode(paperId, true);
   }
 
+  sendEdit = () => {
+    const { updatePaperData } = this.props;
+    const { title } = this.state;
+    updatePaperData({ title });
+  }
+
   endEdit = () => {
     const { setEditMode } = this.props;
     setEditMode(null, false);
@@ -135,7 +114,15 @@ class ReLinksCardHeader extends React.PureComponent {
     const { classes, title, authors, editMode } = this.props;
     return (
       <CardHeader
-        title={<CardHeaderTitle editMode={editMode} title={title} handleChange={this.handleChange} classes={classes} />}
+        title={
+          <CardHeaderTitle
+            editMode={editMode}
+            sendEdit={this.sendEdit}
+            title={title}
+            handleChange={this.handleChange}
+            endEdit={this.endEdit}
+          />
+        }
         subheader={authors}
         action={
           <CardHeaderOption
@@ -160,6 +147,7 @@ ReLinksCardHeader.propTypes = {
   paperId: PropTypes.string,
   setEditMode: PropTypes.func,
   editMode: PropTypes.bool,
+  updatePaperData: PropTypes.func,
 };
 
 export default withStyles(styles)(ReLinksCardHeader);
