@@ -12,6 +12,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
@@ -20,6 +21,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SearchResultContainer from 'containers/SearchResultContainer/Loadable';
 import PaperLinksContainer from 'containers/PaperLinksContainer/Loadable';
+import CardLayoutContainer from 'containers/CardLayoutContainer';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
@@ -43,6 +45,23 @@ const styles = {
   },
 };
 
+const CardLayoutRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={
+      (props) => {
+        const { setEditMode, editModeData, updatePaperData } = rest;
+        const routeProps = { setEditMode, editModeData, updatePaperData, ...props };
+        return <Component {...routeProps} />;
+      }
+    }
+  />
+);
+
+CardLayoutRoute.propTypes = {
+  component: PropTypes.func,
+};
+
 export default function App() {
   return (
     <AppWrapper>
@@ -56,8 +75,10 @@ export default function App() {
       <Grid container justify="center" style={styles.mainApp}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/searchResult" component={SearchResultContainer} />
-          <Route exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
+          <CardLayoutContainer>
+            <CardLayoutRoute exact path="/searchResult" component={SearchResultContainer} />
+            <CardLayoutRoute exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
+          </CardLayoutContainer>
           <Route component={NotFoundPage} />
         </Switch>
       </Grid>

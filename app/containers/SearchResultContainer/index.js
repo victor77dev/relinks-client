@@ -31,14 +31,20 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   render() {
-    const { searchResult } = this.props;
+    const { searchResult, setEditMode, editModeData, updatePaperData } = this.props;
     return (
       <div>
         <Helmet>
           <title>Search Result</title>
           <meta name="description" content="Search Result" />
         </Helmet>
-        <SearchResult searchResult={searchResult} goToPath={this.goToPath} />
+        <SearchResult
+          searchResult={searchResult}
+          goToPath={this.goToPath}
+          setEditMode={setEditMode}
+          editModeData={editModeData}
+          updatePaperData={updatePaperData}
+        />
       </div>
     );
   }
@@ -47,6 +53,9 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
 SearchResultContainer.propTypes = {
   searchResult: PropTypes.array,
   history: PropTypes.object,
+  setEditMode: PropTypes.func,
+  updatePaperData: PropTypes.func,
+  editModeData: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 
-import CardLayoutContainer from 'containers/CardLayoutContainer';
+import CardLayout from 'components/CardLayout';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,8 +20,19 @@ const theme = createMuiTheme({
 
 class Link extends React.PureComponent {
   render() {
-    const { paperData, goToPath, linkDetail, linkType } = this.props;
-    return <CardLayoutContainer paperData={paperData} linkDetail={linkDetail} linkType={linkType} theme={theme} goToPath={goToPath} />;
+    const { paperData, goToPath, setEditMode, editModeData, updatePaperData, linkDetail, linkType } = this.props;
+    return (
+      <CardLayout
+        paperData={paperData}
+        linkDetail={linkDetail}
+        linkType={linkType}
+        theme={theme}
+        goToPath={goToPath}
+        setEditMode={setEditMode}
+        editModeData={editModeData}
+        updatePaperData={updatePaperData}
+      />
+    );
   }
 }
 
@@ -30,6 +41,9 @@ Link.propTypes = {
   goToPath: PropTypes.func,
   linkDetail: PropTypes.object,
   linkType: PropTypes.string,
+  setEditMode: PropTypes.func,
+  updatePaperData: PropTypes.func,
+  editModeData: PropTypes.object,
 };
 
 export default Link;

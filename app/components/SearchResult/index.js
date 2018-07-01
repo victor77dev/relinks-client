@@ -16,12 +16,21 @@ import messages from './messages';
 /* eslint-disable no-underscore-dangle */
 class SearchResult extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { searchResult, goToPath } = this.props;
+    const { searchResult, goToPath, setEditMode, editModeData, updatePaperData } = this.props;
     let paperList;
     if (!searchResult || searchResult.length === 0) {
       paperList = <h3>Cannot find related paper in ReLinks</h3>;
     } else {
-      paperList = searchResult.map((data) => <Paper paperData={data} key={data._id} goToPath={goToPath} />);
+      paperList = searchResult.map((data) => (
+        <Paper
+          paperData={data}
+          key={data._id}
+          goToPath={goToPath}
+          setEditMode={setEditMode}
+          editModeData={editModeData}
+          updatePaperData={updatePaperData}
+        />
+      ));
     }
 
     return (
@@ -38,6 +47,9 @@ class SearchResult extends React.PureComponent { // eslint-disable-line react/pr
 SearchResult.propTypes = {
   searchResult: PropTypes.array,
   goToPath: PropTypes.func,
+  setEditMode: PropTypes.func,
+  editModeData: PropTypes.object,
+  updatePaperData: PropTypes.func,
 };
 
 export default SearchResult;

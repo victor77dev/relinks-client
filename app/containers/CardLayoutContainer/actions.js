@@ -7,6 +7,7 @@
 import {
   START_EDIT,
   STOP_EDIT,
+  UPDATE_PAPER_INFO,
 } from './constants';
 
 export function setEditMode(paperId, value) {
@@ -19,5 +20,13 @@ export function setEditMode(paperId, value) {
   return {
     type: STOP_EDIT,
     paperId,
+  };
+}
+
+export function updatePaperInfo(paperId, paperInfo) {
+  return {
+    type: UPDATE_PAPER_INFO,
+    paperId,
+    paperInfo,
   };
 }

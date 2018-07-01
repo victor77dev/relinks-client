@@ -46,7 +46,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { paperLink, match } = this.props;
+    const { paperLink, match, setEditMode, editModeData, updatePaperData } = this.props;
     const { paperId } = match.params;
     return (
       <div>
@@ -54,7 +54,14 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
           <title>Paper Links</title>
           <meta name="description" content="Paper Links" />
         </Helmet>
-        <PaperLinks paperId={paperId} paperLink={paperLink} goToPath={this.goToPath} />
+        <PaperLinks
+          paperId={paperId}
+          paperLink={paperLink}
+          goToPath={this.goToPath}
+          setEditMode={setEditMode}
+          editModeData={editModeData}
+          updatePaperData={updatePaperData}
+        />
       </div>
     );
   }
@@ -65,6 +72,9 @@ PaperLinksContainer.propTypes = {
   paperLink: PropTypes.object,
   history: PropTypes.object,
   callGetLinksDetail: PropTypes.func,
+  setEditMode: PropTypes.func,
+  updatePaperData: PropTypes.func,
+  editModeData: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

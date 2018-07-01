@@ -8,6 +8,7 @@ import React from 'react';
 // import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet';
 import Card from '@material-ui/core/Card';
 
 import ReLinksCardHeader from './ReLinksCardHeader';
@@ -26,6 +27,7 @@ class CardLayout extends React.PureComponent {
   constructor(props) {
     super(props);
     this.goToPath = this.goToPath.bind(this);
+    this.updatePaperData = this.updatePaperData.bind(this);
   }
 
   // Get authors name from arxiv data; if not exists, find in ref data
@@ -44,6 +46,12 @@ class CardLayout extends React.PureComponent {
     setEditMode(null, false);
   }
 
+  // Insert paperData in updatePaperData call
+  updatePaperData(updateData) {
+    const { paperData, updatePaperData } = this.props;
+    updatePaperData(paperData, updateData);
+  }
+
   render() {
     const { classes, paperData, theme, linkDetail, linkType, setEditMode, editModeData } = this.props;
     const { title } = paperData;
@@ -54,6 +62,10 @@ class CardLayout extends React.PureComponent {
     const currEditMode = paperId === editPaper ? editMode : false;
     return (
       <MuiThemeProvider theme={theme}>
+        <Helmet>
+          <title>Card for {title}</title>
+          <meta name="description" content={`Card for ${title}`} />
+        </Helmet>
         <Card className={classes.card}>
           <ReLinksCardHeader
             title={title}
@@ -62,6 +74,7 @@ class CardLayout extends React.PureComponent {
             goToPath={this.goToPath}
             setEditMode={setEditMode}
             editMode={currEditMode}
+            updatePaperData={this.updatePaperData}
           />
           <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} editMode={currEditMode} />
           <ReLinksCardContentExt paperData={paperData} editMode={currEditMode} />
@@ -80,6 +93,7 @@ CardLayout.propTypes = {
   theme: PropTypes.object,
   goToPath: PropTypes.func,
   setEditMode: PropTypes.func,
+  updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };
 

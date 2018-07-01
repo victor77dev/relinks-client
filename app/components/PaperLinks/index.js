@@ -196,7 +196,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
   }
 
   render() {
-    const { paperLink, goToPath, classes } = this.props;
+    const { paperLink, goToPath, classes, setEditMode, editModeData, updatePaperData } = this.props;
     const currLineStart = this.state.currLinkDivWidth * 0.02;
     const currLineEnd = this.state.currLinkDivWidth * 0.1;
     const currLineMiddle = this.state.currLinkDivHeight / 2;
@@ -223,7 +223,18 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
     } else {
       prevPaperList = paperLink.previous.map((linkDetail, index) => {
         const data = paperLink.previousPaper[index];
-        return (<Link paperData={data} linkDetail={linkDetail} linkType="previous" key={data._id} goToPath={goToPath} />);
+        return (
+          <Link
+            paperData={data}
+            linkDetail={linkDetail}
+            linkType="previous"
+            key={data._id}
+            goToPath={goToPath}
+            setEditMode={setEditMode}
+            editModeData={editModeData}
+            updatePaperData={updatePaperData}
+          />
+        );
       });
     }
 
@@ -237,6 +248,9 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
           linkType="current"
           key={data._id}
           goToPath={goToPath}
+          setEditMode={setEditMode}
+          editModeData={editModeData}
+          updatePaperData={updatePaperData}
         />
       ));
     }
@@ -247,7 +261,18 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
     } else {
       nextPaperList = paperLink.next.map((linkDetail, index) => {
         const data = paperLink.nextPaper[index];
-        return (<Link paperData={data} linkDetail={linkDetail} linkType="next" key={data._id} goToPath={goToPath} />);
+        return (
+          <Link
+            paperData={data}
+            linkDetail={linkDetail}
+            linkType="next"
+            key={data._id}
+            goToPath={goToPath}
+            setEditMode={setEditMode}
+            editModeData={editModeData}
+            updatePaperData={updatePaperData}
+          />
+        );
       });
     }
 
@@ -273,6 +298,9 @@ PaperLinks.propTypes = {
   paperLink: PropTypes.object,
   goToPath: PropTypes.func,
   classes: PropTypes.object,
+  setEditMode: PropTypes.func,
+  updatePaperData: PropTypes.func,
+  editModeData: PropTypes.object,
 };
 
 export default withStyles(styles)(PaperLinks);
