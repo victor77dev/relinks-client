@@ -14,7 +14,7 @@ const selectCardLayoutContainerDomain = (state) => state.get('cardLayoutContaine
  * Default selector used by CardLayoutContainer
  */
 
-const makeSelectCardLayoutMode = () => createSelector(
+const makeSelectCardLayoutEditMode = () => createSelector(
   selectCardLayoutContainerDomain,
   (cardModeState) => {
     const editPaper = cardModeState.get('editPaper');
@@ -24,7 +24,16 @@ const makeSelectCardLayoutMode = () => createSelector(
   }
 );
 
+const makeSelectCardLayoutAddMode = () => createSelector(
+  selectCardLayoutContainerDomain,
+  (cardModeState) => {
+    const addingPaper = cardModeState.get('addingPaper');
+    return addingPaper;
+  }
+);
+
 export {
   selectCardLayoutContainerDomain,
-  makeSelectCardLayoutMode,
+  makeSelectCardLayoutEditMode,
+  makeSelectCardLayoutAddMode,
 };

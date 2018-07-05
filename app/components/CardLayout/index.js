@@ -64,13 +64,14 @@ class CardLayout extends React.PureComponent {
 
   render() {
     const { classes, paperData, theme, linkDetail, linkType, cardLayoutProps } = this.props;
-    const { setEditMode, startEdit, editModeData } = cardLayoutProps;
+    const { setEditMode, startEdit, editModeData, addingPaper } = cardLayoutProps;
     const { title } = paperData;
     /* eslint-disable no-underscore-dangle */
     const paperId = paperData._id;
     const authors = this.getAuthors(paperData);
     const { editPaper, editMode, editStarted } = editModeData;
     const currEditMode = paperId === editPaper ? editMode : false;
+    const currAddingPaper = paperId === editPaper ? addingPaper : false;
     return (
       <MuiThemeProvider theme={theme}>
         <Helmet>
@@ -91,7 +92,13 @@ class CardLayout extends React.PureComponent {
           />
           <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} editMode={currEditMode} />
           <ReLinksCardContentExt paperData={paperData} editMode={currEditMode} />
-          <ReLinksCardActions paperData={paperData} goToPath={this.goToPath} addPaper={this.addPaper} editMode={currEditMode} />
+          <ReLinksCardActions
+            paperData={paperData}
+            goToPath={this.goToPath}
+            addPaper={this.addPaper}
+            editMode={currEditMode}
+            addingPaper={currAddingPaper}
+          />
         </Card>
       </MuiThemeProvider>
     );

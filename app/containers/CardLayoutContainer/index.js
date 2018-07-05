@@ -12,7 +12,7 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectCardLayoutMode } from './selectors';
+import { makeSelectCardLayoutEditMode, makeSelectCardLayoutAddMode } from './selectors';
 import { setEditMode, updatePaperInfo, startEdit, addPaper } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -31,7 +31,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { children, setEditModeAction, addPaperAction, startEditAction, editModeData } = this.props;
+    const { children, setEditModeAction, addPaperAction, startEditAction, editModeData, addingPaper } = this.props;
     return (
       <div>
         {
@@ -44,6 +44,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
                   startEdit: startEditAction,
                   addPaper: addPaperAction,
                   updatePaperData: this.updatePaperData,
+                  addingPaper,
                 },
               })
             )
@@ -61,10 +62,12 @@ CardLayoutContainer.propTypes = {
   addPaperAction: PropTypes.func,
   updatePaperInfoAction: PropTypes.func,
   editModeData: PropTypes.object,
+  addingPaper: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editModeData: makeSelectCardLayoutMode(),
+  editModeData: makeSelectCardLayoutEditMode(),
+  addingPaper: makeSelectCardLayoutAddMode(),
 });
 
 function mapDispatchToProps(dispatch) {
