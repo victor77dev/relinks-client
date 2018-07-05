@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = (theme) => ({
   actions: {
@@ -18,54 +19,104 @@ const styles = (theme) => ({
   button: {
     margin: theme.spacing.unit,
   },
+  progress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 });
+
+const CardActionsButton = (props) => {
+  const { text, func, id, classes, variant, addingPaper } = props;
+  return (
+    addingPaper ?
+      <Button
+        key={id}
+        size="small"
+        color="primary"
+        className={classes.button}
+        variant={variant}
+        disabled
+      >
+        Adding
+        <CircularProgress className={classes.progress} size={24} color="inherit" />
+      </Button>
+    :
+      <Button
+        key={id}
+        size="small"
+        color="primary"
+        className={classes.button}
+        variant={variant}
+        onClick={func}
+      >
+        {text}
+      </Button>
+  );
+};
+
+CardActionsButton.propTypes = {
+  text: PropTypes.string,
+  func: PropTypes.func,
+  id: PropTypes.string,
+  classes: PropTypes.object,
+  variant: PropTypes.string,
+  addingPaper: PropTypes.bool,
+};
 
 /* eslint-disable no-underscore-dangle */
 // Card Actions in ReLinks
 const ReLinksCardActions = (props) => {
   const checkPaperOnClick = (id) => {
-    props.goToPath(`/paperLinks/${id}`);
+    const { goToPath } = props;
+    goToPath(`/paperLinks/${id}`);
   };
 
   const addPaperOnClick = (id) => {
-    props.addPaper(id);
+    const { addPaper } = props;
+    addPaper(id);
   };
 
-  const { paperData, classes } = props;
+  const { paperData, classes, addingPaper } = props;
   const variant = 'contained';
   const paperId = paperData._id;
-  const buttonList = [];
   // Create Button to go to Paper Links in ReLinks
-  buttonList.push({
+  const paperLinksButtonData = {
     id: `Check_${paperId}`,
     text: 'Check ReLinks',
     func: checkPaperOnClick.bind(this, paperId),
-  });
-  if (paperData.arxiv.length === 0 && paperData.ref.length !== 0) {
-    // Create Button to add paper in ReLinks
-    buttonList.push({
-      id: `Add_${paperId}`,
-      text: 'Add in ReLinks',
-      func: addPaperOnClick.bind(this, paperId),
-    });
+  };
+  // Create Button to add paper in ReLinks
+  const addPaperButtonData = (paperData.arxiv.length === 0 && paperData.ref.length !== 0) ?
+  {
+    id: `Add_${paperId}`,
+    text: 'Add in ReLinks',
+    func: addPaperOnClick.bind(this, paperId),
   }
+  : null;
+
   return (
     <CardActions className={classes.actions} disableActionSpacing>
-      {buttonList.map((button) => {
-        const { text, func, id } = button;
-        return (
-          <Button
-            key={id}
-            size="small"
-            color="primary"
-            className={classes.button}
-            variant={variant}
-            onClick={func}
-          >
-            {text}
-          </Button>
-        );
-      })}
+      <CardActionsButton
+        text={paperLinksButtonData.text}
+        func={paperLinksButtonData.func}
+        id={paperLinksButtonData.id}
+        classes={classes}
+        variant={variant}
+      />
+      {
+        addPaperButtonData !== null &&
+        <CardActionsButton
+          text={addPaperButtonData.text}
+          func={addPaperButtonData.func}
+          id={addPaperButtonData.id}
+          classes={classes}
+          variant={variant}
+          addingPaper={addingPaper}
+        />
+      }
     </CardActions>
   );
 };
@@ -73,6 +124,8 @@ const ReLinksCardActions = (props) => {
 ReLinksCardActions.propTypes = {
   paperData: PropTypes.object,
   classes: PropTypes.object,
+  addingPaper: PropTypes.bool,
+  addPaper: PropTypes.func,
 };
 
 export default withStyles(styles)(ReLinksCardActions);
