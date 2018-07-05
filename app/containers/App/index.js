@@ -76,7 +76,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <CardLayoutContainer>
-            <CardLayoutRoute exact path="/searchResult" component={SearchResultContainer} />
+            <CardLayoutRoute exact path="/searchResult/:text" component={SearchResultContainer} />
             <CardLayoutRoute exact path="/paperLinks/:paperId" component={PaperLinksContainer} />
           </CardLayoutContainer>
           <Route component={NotFoundPage} />

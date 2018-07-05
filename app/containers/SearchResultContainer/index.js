@@ -14,8 +14,9 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import SearchResult from 'components/SearchResult/Loadable';
+import { updateText, searchPaper } from 'containers/SearchBoxContainer/actions';
 
-import { makeSelectSearchResult, makeSelectSearchError } from './selectors';
+import { makeSelectSearchText, makeSelectSearchResult, makeSelectSearchError } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -25,9 +26,33 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
     this.goToPath = this.goToPath.bind(this);
   }
 
+  componentDidMount() {
+    const { match, searchText } = this.props;
+    const { text } = match.params;
+    if (text !== searchText && searchText === '') {
+      this.updateSearchResult(text);
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    const { searchText } = this.props;
+    const { match } = nextProps;
+    const { params } = match;
+    const { text } = params;
+    if (text !== searchText && searchText === '') {
+      this.updateSearchResult(text);
+    }
+  }
+
   goToPath(path) {
     const { history } = this.props;
     history.push(path);
+  }
+
+  updateSearchResult(text) {
+    const { callSearchPaper, updateTextAction } = this.props;
+    updateTextAction(text);
+    callSearchPaper(text);
   }
 
   render() {
@@ -49,19 +74,29 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
 }
 
 SearchResultContainer.propTypes = {
+  callSearchPaper: PropTypes.func,
+  updateTextAction: PropTypes.func,
+  searchText: PropTypes.string,
   searchResult: PropTypes.array,
   history: PropTypes.object,
   cardLayoutProps: PropTypes.object,
+  match: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
+  searchText: makeSelectSearchText(),
   searchResult: makeSelectSearchResult(),
   searchError: makeSelectSearchError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    updateTextAction: (text) => {
+      dispatch(updateText(text));
+    },
+    callSearchPaper: (text) => {
+      dispatch(searchPaper(text));
+    },
   };
 }
 
