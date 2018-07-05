@@ -196,7 +196,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
   }
 
   render() {
-    const { paperLink, goToPath, classes, setEditMode, editModeData, updatePaperData, startEdit, addPaper } = this.props;
+    const { paperLink, goToPath, classes, cardLayoutProps } = this.props;
     const currLineStart = this.state.currLinkDivWidth * 0.02;
     const currLineEnd = this.state.currLinkDivWidth * 0.1;
     const currLineMiddle = this.state.currLinkDivHeight / 2;
@@ -230,11 +230,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
             linkType="previous"
             key={data._id}
             goToPath={goToPath}
-            setEditMode={setEditMode}
-            startEdit={startEdit}
-            addPaper={addPaper}
-            editModeData={editModeData}
-            updatePaperData={updatePaperData}
+            cardLayoutProps={cardLayoutProps}
           />
         );
       });
@@ -250,11 +246,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
           linkType="current"
           key={data._id}
           goToPath={goToPath}
-          setEditMode={setEditMode}
-          startEdit={startEdit}
-          addPaper={addPaper}
-          editModeData={editModeData}
-          updatePaperData={updatePaperData}
+          cardLayoutProps={cardLayoutProps}
         />
       ));
     }
@@ -272,11 +264,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
             linkType="next"
             key={data._id}
             goToPath={goToPath}
-            setEditMode={setEditMode}
-            startEdit={startEdit}
-            addPaper={addPaper}
-            editModeData={editModeData}
-            updatePaperData={updatePaperData}
+            cardLayoutProps={cardLayoutProps}
           />
         );
       });
@@ -304,11 +292,7 @@ PaperLinks.propTypes = {
   paperLink: PropTypes.object,
   goToPath: PropTypes.func,
   classes: PropTypes.object,
-  setEditMode: PropTypes.func,
-  startEdit: PropTypes.func,
-  addPaper: PropTypes.func,
-  updatePaperData: PropTypes.func,
-  editModeData: PropTypes.object,
+  cardLayoutProps: PropTypes.object,
 };
 
 export default withStyles(styles)(PaperLinks);

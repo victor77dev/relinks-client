@@ -38,11 +38,13 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
           React.Children.map(children, (child) =>
             (
               React.cloneElement(child, {
-                editModeData,
-                setEditMode: setEditModeAction,
-                startEdit: startEditAction,
-                addPaper: addPaperAction,
-                updatePaperData: this.updatePaperData,
+                cardLayoutProps: {
+                  editModeData,
+                  setEditMode: setEditModeAction,
+                  startEdit: startEditAction,
+                  addPaper: addPaperAction,
+                  updatePaperData: this.updatePaperData,
+                },
               })
             )
           )

@@ -46,7 +46,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { paperLink, match, setEditMode, editModeData, updatePaperData, startEdit, addPaper } = this.props;
+    const { paperLink, match, cardLayoutProps } = this.props;
     const { paperId } = match.params;
     return (
       <div>
@@ -58,11 +58,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
           paperId={paperId}
           paperLink={paperLink}
           goToPath={this.goToPath}
-          setEditMode={setEditMode}
-          startEdit={startEdit}
-          addPaper={addPaper}
-          editModeData={editModeData}
-          updatePaperData={updatePaperData}
+          cardLayoutProps={cardLayoutProps}
         />
       </div>
     );
@@ -73,12 +69,8 @@ PaperLinksContainer.propTypes = {
   match: PropTypes.object,
   paperLink: PropTypes.object,
   history: PropTypes.object,
+  cardLayoutProps: PropTypes.object,
   callGetLinksDetail: PropTypes.func,
-  setEditMode: PropTypes.func,
-  startEdit: PropTypes.func,
-  addPaper: PropTypes.func,
-  updatePaperData: PropTypes.func,
-  editModeData: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

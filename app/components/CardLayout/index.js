@@ -42,25 +42,29 @@ class CardLayout extends React.PureComponent {
   }
 
   goToPath(path) {
-    const { goToPath, setEditMode } = this.props;
+    const { goToPath, cardLayoutProps } = this.props;
+    const { setEditMode } = cardLayoutProps;
     goToPath(path);
     setEditMode(null, false);
   }
 
   addPaper(paperId) {
-    const { addPaper, paperData } = this.props;
+    const { paperData, cardLayoutProps } = this.props;
+    const { addPaper } = cardLayoutProps;
     const { title } = paperData;
     addPaper(title, paperId);
   }
 
   // Insert paperData in updatePaperData call
   updatePaperData(updateData) {
-    const { paperData, updatePaperData } = this.props;
+    const { paperData, cardLayoutProps } = this.props;
+    const { updatePaperData } = cardLayoutProps;
     updatePaperData(paperData, updateData);
   }
 
   render() {
-    const { classes, paperData, theme, linkDetail, linkType, setEditMode, startEdit, editModeData } = this.props;
+    const { classes, paperData, theme, linkDetail, linkType, cardLayoutProps } = this.props;
+    const { setEditMode, startEdit, editModeData } = cardLayoutProps;
     const { title } = paperData;
     /* eslint-disable no-underscore-dangle */
     const paperId = paperData._id;
@@ -101,11 +105,7 @@ CardLayout.propTypes = {
   linkType: PropTypes.string,
   theme: PropTypes.object,
   goToPath: PropTypes.func,
-  addPaper: PropTypes.func,
-  setEditMode: PropTypes.func,
-  startEdit: PropTypes.func,
-  updatePaperData: PropTypes.func,
-  editModeData: PropTypes.object,
+  cardLayoutProps: PropTypes.object,
 };
 
 export default withStyles(styles)(CardLayout);

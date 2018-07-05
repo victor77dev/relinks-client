@@ -20,7 +20,7 @@ const theme = createMuiTheme({
 
 class Link extends React.PureComponent {
   render() {
-    const { paperData, goToPath, setEditMode, editModeData, updatePaperData, startEdit, addPaper, linkDetail, linkType } = this.props;
+    const { paperData, goToPath, cardLayoutProps, linkDetail, linkType } = this.props;
     return (
       <CardLayout
         paperData={paperData}
@@ -28,11 +28,7 @@ class Link extends React.PureComponent {
         linkType={linkType}
         theme={theme}
         goToPath={goToPath}
-        setEditMode={setEditMode}
-        startEdit={startEdit}
-        addPaper={addPaper}
-        editModeData={editModeData}
-        updatePaperData={updatePaperData}
+        cardLayoutProps={cardLayoutProps}
       />
     );
   }
@@ -43,11 +39,7 @@ Link.propTypes = {
   goToPath: PropTypes.func,
   linkDetail: PropTypes.object,
   linkType: PropTypes.string,
-  setEditMode: PropTypes.func,
-  startEdit: PropTypes.func,
-  addPaper: PropTypes.func,
-  updatePaperData: PropTypes.func,
-  editModeData: PropTypes.object,
+  cardLayoutProps: PropTypes.object,
 };
 
 export default Link;
