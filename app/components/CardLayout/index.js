@@ -52,7 +52,7 @@ class CardLayout extends React.PureComponent {
     const { paperData, cardLayoutProps } = this.props;
     const { addPaper } = cardLayoutProps;
     const { title } = paperData;
-    addPaper(title, paperId);
+    addPaper(title, paperId, this.goToPath);
   }
 
   // Insert paperData in updatePaperData call

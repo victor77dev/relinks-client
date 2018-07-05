@@ -25,7 +25,7 @@ export function* updatePaperInfo(action) {
 }
 
 export function* addPaperFromArxiv(action) {
-  const { title, paperId } = action;
+  const { title, paperId, goToPath } = action;
   try {
     // Call addPaper api
     const addPaper = yield call(axios.get, `${apiUrl}/addPaper`, {
@@ -36,6 +36,7 @@ export function* addPaperFromArxiv(action) {
     });
     // Call PaperAdded
     yield put(paperAdded(addPaper.data));
+    goToPath(`/paperLinks/${paperId}`);
   } catch (err) {
     yield put(addPaperError(err));
   }

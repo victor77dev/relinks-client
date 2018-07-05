@@ -50,11 +50,12 @@ export function stopEdit() {
   };
 }
 
-export function addPaper(title, paperId) {
+export function addPaper(title, paperId, goToPath) {
   return {
     type: ADD_PAPER,
     title,
     paperId,
+    goToPath,
   };
 }
 

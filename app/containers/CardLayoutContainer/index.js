@@ -21,6 +21,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
   constructor(props) {
     super(props);
     this.updatePaperData = this.updatePaperData.bind(this);
+    this.addPaperAction = this.addPaperAction.bind(this);
   }
 
   /* eslint-disable no-underscore-dangle */
@@ -30,8 +31,13 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
     updatePaperInfoAction(paperId, paperData, updateData);
   }
 
+  addPaperAction(title, paperId, goToPath) {
+    const { addPaperAction } = this.props;
+    addPaperAction(title, paperId, goToPath);
+  }
+
   render() {
-    const { children, setEditModeAction, addPaperAction, startEditAction, editModeData, addingPaper } = this.props;
+    const { children, setEditModeAction, startEditAction, editModeData, addingPaper } = this.props;
     return (
       <div>
         {
@@ -42,7 +48,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
                   editModeData,
                   setEditMode: setEditModeAction,
                   startEdit: startEditAction,
-                  addPaper: addPaperAction,
+                  addPaper: this.addPaperAction,
                   updatePaperData: this.updatePaperData,
                   addingPaper,
                 },
@@ -78,8 +84,8 @@ function mapDispatchToProps(dispatch) {
     startEditAction: () => {
       dispatch(startEdit());
     },
-    addPaperAction: (title, paperId) => {
-      dispatch(addPaper(title, paperId));
+    addPaperAction: (title, paperId, goToPath) => {
+      dispatch(addPaper(title, paperId, goToPath));
     },
     updatePaperInfoAction: (paperId, paperData, updateData) => {
       const newPaperData = paperData;
