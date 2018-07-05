@@ -13,7 +13,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectCardLayoutMode } from './selectors';
-import { setEditMode, updatePaperInfo, startEdit } from './actions';
+import { setEditMode, updatePaperInfo, startEdit, addPaper } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -31,7 +31,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { children, setEditModeAction, startEditAction, editModeData } = this.props;
+    const { children, setEditModeAction, addPaperAction, startEditAction, editModeData } = this.props;
     return (
       <div>
         {
@@ -41,6 +41,7 @@ export class CardLayoutContainer extends React.PureComponent { // eslint-disable
                 editModeData,
                 setEditMode: setEditModeAction,
                 startEdit: startEditAction,
+                addPaper: addPaperAction,
                 updatePaperData: this.updatePaperData,
               })
             )
@@ -55,6 +56,7 @@ CardLayoutContainer.propTypes = {
   children: PropTypes.array,
   setEditModeAction: PropTypes.func,
   startEditAction: PropTypes.func,
+  addPaperAction: PropTypes.func,
   updatePaperInfoAction: PropTypes.func,
   editModeData: PropTypes.object,
 };
@@ -70,6 +72,9 @@ function mapDispatchToProps(dispatch) {
     },
     startEditAction: () => {
       dispatch(startEdit());
+    },
+    addPaperAction: (title, paperId) => {
+      dispatch(addPaper(title, paperId));
     },
     updatePaperInfoAction: (paperId, paperData, updateData) => {
       const newPaperData = paperData;

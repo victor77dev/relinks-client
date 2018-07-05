@@ -10,12 +10,16 @@ import {
   STOP_EDIT_MODE,
   START_EDIT,
   STOP_EDIT,
+  ADD_PAPER,
+  PAPER_ADDED,
+  ADD_PAPER_ERROR,
 } from './constants';
 
 const initialState = fromJS({
   editPaper: null,
   editMode: false,
   editStarted: false,
+  addingPaper: false,
 });
 
 function cardLayoutContainerReducer(state = initialState, action) {
@@ -34,6 +38,15 @@ function cardLayoutContainerReducer(state = initialState, action) {
     case STOP_EDIT:
       return state
         .set('editStarted', false);
+    case ADD_PAPER:
+      return state
+        .set('addingPaper', true);
+    case PAPER_ADDED:
+      return state
+        .set('addingPaper', false);
+    case ADD_PAPER_ERROR:
+      return state
+        .set('addingPaper', false);
     default:
       return state;
   }

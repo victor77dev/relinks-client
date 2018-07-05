@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { UPDATE_PAPER_INFO } from 'containers/CardLayoutContainer/constants';
-import { updateLoaded, updateError, stopEdit } from 'containers/CardLayoutContainer/actions';
+import { UPDATE_PAPER_INFO, ADD_PAPER } from 'containers/CardLayoutContainer/constants';
+import { updateLoaded, updateError, paperAdded, addPaperError, stopEdit } from 'containers/CardLayoutContainer/actions';
 
 // const config = require('../config.json')
 const apiUrl = 'http://localhost:4000';
@@ -24,6 +24,24 @@ export function* updatePaperInfo(action) {
   }
 }
 
+export function* addPaperFromArxiv(action) {
+  const { title, paperId } = action;
+  try {
+    // Call addPaper api
+    const addPaper = yield call(axios.get, `${apiUrl}/addPaper`, {
+      params: {
+        title,
+        paperId,
+      },
+    });
+    // Call PaperAdded
+    yield put(paperAdded(addPaper.data));
+  } catch (err) {
+    yield put(addPaperError(err));
+  }
+}
+
 export default function* cardLayoutSaga() {
   yield takeLatest(UPDATE_PAPER_INFO, updatePaperInfo);
+  yield takeLatest(ADD_PAPER, addPaperFromArxiv);
 }

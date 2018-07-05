@@ -28,8 +28,7 @@ const ReLinksCardActions = (props) => {
   };
 
   const addPaperOnClick = (id) => {
-    console.log('Add ReLinks Click');
-    console.log(id);
+    props.addPaper(id);
   };
 
   const { paperData, classes } = props;

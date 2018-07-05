@@ -27,6 +27,7 @@ class CardLayout extends React.PureComponent {
   constructor(props) {
     super(props);
     this.goToPath = this.goToPath.bind(this);
+    this.addPaper = this.addPaper.bind(this);
     this.updatePaperData = this.updatePaperData.bind(this);
   }
 
@@ -44,6 +45,12 @@ class CardLayout extends React.PureComponent {
     const { goToPath, setEditMode } = this.props;
     goToPath(path);
     setEditMode(null, false);
+  }
+
+  addPaper(paperId) {
+    const { addPaper, paperData } = this.props;
+    const { title } = paperData;
+    addPaper(title, paperId);
   }
 
   // Insert paperData in updatePaperData call
@@ -80,7 +87,7 @@ class CardLayout extends React.PureComponent {
           />
           <ReLinksCardContent paperData={paperData} linkDetail={linkDetail} linkType={linkType} editMode={currEditMode} />
           <ReLinksCardContentExt paperData={paperData} editMode={currEditMode} />
-          <ReLinksCardActions paperData={paperData} goToPath={this.goToPath} editMode={currEditMode} />
+          <ReLinksCardActions paperData={paperData} goToPath={this.goToPath} addPaper={this.addPaper} editMode={currEditMode} />
         </Card>
       </MuiThemeProvider>
     );
@@ -94,6 +101,7 @@ CardLayout.propTypes = {
   linkType: PropTypes.string,
   theme: PropTypes.object,
   goToPath: PropTypes.func,
+  addPaper: PropTypes.func,
   setEditMode: PropTypes.func,
   startEdit: PropTypes.func,
   updatePaperData: PropTypes.func,

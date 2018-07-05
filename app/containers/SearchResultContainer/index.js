@@ -31,7 +31,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   render() {
-    const { searchResult, setEditMode, editModeData, updatePaperData, startEdit } = this.props;
+    const { searchResult, setEditMode, editModeData, updatePaperData, startEdit, addPaper } = this.props;
     return (
       <div>
         <Helmet>
@@ -43,6 +43,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
           goToPath={this.goToPath}
           setEditMode={setEditMode}
           startEdit={startEdit}
+          addPaper={addPaper}
           editModeData={editModeData}
           updatePaperData={updatePaperData}
         />
@@ -56,6 +57,7 @@ SearchResultContainer.propTypes = {
   history: PropTypes.object,
   setEditMode: PropTypes.func,
   startEdit: PropTypes.func,
+  addPaper: PropTypes.func,
   updatePaperData: PropTypes.func,
   editModeData: PropTypes.object,
 };

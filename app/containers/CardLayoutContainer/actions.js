@@ -9,6 +9,9 @@ import {
   STOP_EDIT_MODE,
   START_EDIT,
   STOP_EDIT,
+  ADD_PAPER,
+  PAPER_ADDED,
+  ADD_PAPER_ERROR,
   UPDATE_PAPER_INFO,
   UPDATE_LOADED,
   UPDATE_ERROR,
@@ -44,6 +47,28 @@ export function startEdit() {
 export function stopEdit() {
   return {
     type: STOP_EDIT,
+  };
+}
+
+export function addPaper(title, paperId) {
+  return {
+    type: ADD_PAPER,
+    title,
+    paperId,
+  };
+}
+
+export function paperAdded(result) {
+  return {
+    type: PAPER_ADDED,
+    result,
+  };
+}
+
+export function addPaperError(error) {
+  return {
+    type: ADD_PAPER_ERROR,
+    error,
   };
 }
 
