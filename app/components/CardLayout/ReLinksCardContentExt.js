@@ -43,7 +43,7 @@ class ReLinksCardContentExt extends React.PureComponent {
     }
     const { summary } = paperData.arxiv[0];
     return (
-      <div>
+      <CardContent>
         <CardActions>
           <Typography paragraph variant="title">
             Summary
@@ -69,7 +69,7 @@ class ReLinksCardContentExt extends React.PureComponent {
             </Typography>
           </CardContent>
         </Collapse>
-      </div>
+      </CardContent>
     );
   }
 }

@@ -79,10 +79,10 @@ class ReLinksCardContent extends React.PureComponent {
       const cardPdf = paperPdf ? <Typography variant={paragraphStyle}>Pdf: <a href={paperPdf} target="_blank">{paperPdf}</a></Typography> : '';
       return (
         <CardContent>
-          {linkDetail && cardButton}
-          {linkDetail ? cardContent : cardInfo}
           {cardLink}
           {cardPdf}
+          {linkDetail && cardButton}
+          {linkDetail ? cardContent : cardInfo}
         </CardContent>
       );
     } else if (paperData.ref.length !== 0) {
