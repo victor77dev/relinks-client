@@ -68,7 +68,7 @@ CardLayoutContainer.propTypes = {
   addPaperAction: PropTypes.func,
   updatePaperInfoAction: PropTypes.func,
   editModeData: PropTypes.object,
-  addingPaper: PropTypes.bool,
+  addingPaper: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

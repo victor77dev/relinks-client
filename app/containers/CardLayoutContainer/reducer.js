@@ -19,7 +19,7 @@ const initialState = fromJS({
   editPaper: null,
   editMode: false,
   editStarted: false,
-  addingPaper: false,
+  addingPaper: {},
 });
 
 function cardLayoutContainerReducer(state = initialState, action) {
@@ -40,13 +40,13 @@ function cardLayoutContainerReducer(state = initialState, action) {
         .set('editStarted', false);
     case ADD_PAPER:
       return state
-        .set('addingPaper', true);
+        .update('addingPaper', (map) => map.update(action.paperId, () => true));
     case PAPER_ADDED:
       return state
-        .set('addingPaper', false);
+        .update('addingPaper', (map) => map.update(action.paperId, () => false));
     case ADD_PAPER_ERROR:
       return state
-        .set('addingPaper', false);
+        .update('addingPaper', (map) => map.update(action.paperId, () => false));
     default:
       return state;
   }

@@ -59,16 +59,18 @@ export function addPaper(title, paperId, goToPath) {
   };
 }
 
-export function paperAdded(result) {
+export function paperAdded(paperId, result) {
   return {
     type: PAPER_ADDED,
+    paperId,
     result,
   };
 }
 
-export function addPaperError(error) {
+export function addPaperError(paperId, error) {
   return {
     type: ADD_PAPER_ERROR,
+    paperId,
     error,
   };
 }

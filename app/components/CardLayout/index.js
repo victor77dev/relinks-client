@@ -71,7 +71,8 @@ class CardLayout extends React.PureComponent {
     const authors = this.getAuthors(paperData);
     const { editPaper, editMode, editStarted } = editModeData;
     const currEditMode = paperId === editPaper ? editMode : false;
-    const currAddingPaper = paperId === editPaper ? addingPaper : false;
+    // Set addingPaper to false if the paper is not adding
+    const currAddingPaper = addingPaper.get(paperId, false);
     return (
       <MuiThemeProvider theme={theme}>
         <Helmet>

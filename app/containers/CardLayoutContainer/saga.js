@@ -35,10 +35,10 @@ export function* addPaperFromArxiv(action) {
       },
     });
     // Call PaperAdded
-    yield put(paperAdded(addPaper.data));
+    yield put(paperAdded(paperId, addPaper.data));
     goToPath(`/paperLinks/${paperId}`);
   } catch (err) {
-    yield put(addPaperError(err));
+    yield put(addPaperError(paperId, err));
   }
 }
 
