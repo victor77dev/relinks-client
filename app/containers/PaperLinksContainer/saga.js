@@ -17,12 +17,28 @@ export function* getLinks(action) {
       },
     });
     // Put return value to getLinkDetails
-    if (!paperLink.data || paperLink.data.length === 0) {
+    if (!paperLink.data || paperLink.data.error || paperLink.data.length === 0) {
       throw new Error('No paper data found');
     }
     yield put(getLinksLoaded(paperLink.data[0]));
-  } catch (err) {
-    yield put(getLinksError(err));
+  } catch (linkErr) {
+    // Call getPaper api to see if data exist
+    try {
+      const paperDetail = yield call(axios.get, `${apiUrl}/getPaper`, {
+        params: {
+          id: paperId,
+        },
+      });
+      yield put(getLinksLoaded({
+        currentPaper: [paperDetail.data],
+        next: [],
+        nextPaper: [],
+        previous: [],
+        previousPaper: [],
+      }));
+    } catch (detailErr) {
+      yield put(getLinksError(detailErr));
+    }
   }
 }
 

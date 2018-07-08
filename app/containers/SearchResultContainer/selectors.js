@@ -29,8 +29,20 @@ const makeSelectSearchError = () => createSelector(
   (searchBoxState) => searchBoxState.get('searchError')
 );
 
+const makeSelectSearchResultFromArxiv = () => createSelector(
+  selectSearchBoxContainerDomain,
+  (searchBoxState) => searchBoxState.get('searchResultFromArxiv')
+);
+
+const makeSelectSearchErrorFromArxiv = () => createSelector(
+  selectSearchBoxContainerDomain,
+  (searchBoxState) => searchBoxState.get('searchErrorFromArxiv')
+);
+
 export {
   makeSelectSearchText,
   makeSelectSearchResult,
   makeSelectSearchError,
+  makeSelectSearchResultFromArxiv,
+  makeSelectSearchErrorFromArxiv,
 };

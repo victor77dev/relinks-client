@@ -14,9 +14,15 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import SearchResult from 'components/SearchResult/Loadable';
-import { updateText, searchPaper } from 'containers/SearchBoxContainer/actions';
+import { updateText, searchPaper, searchPaperFromArxiv } from 'containers/SearchBoxContainer/actions';
 
-import { makeSelectSearchText, makeSelectSearchResult, makeSelectSearchError } from './selectors';
+import {
+  makeSelectSearchText,
+  makeSelectSearchResult,
+  makeSelectSearchError,
+  makeSelectSearchResultFromArxiv,
+  makeSelectSearchErrorFromArxiv,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -24,6 +30,10 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   constructor(props) {
     super(props);
     this.goToPath = this.goToPath.bind(this);
+  }
+
+  state = {
+    arxiv: this.props.match.path === '/searchResultFromArxiv/:text',
   }
 
   componentDidMount() {
@@ -50,21 +60,36 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   updateSearchResult(text) {
-    const { callSearchPaper, updateTextAction } = this.props;
+    const { callSearchPaperFromArxiv, callSearchPaper, updateTextAction } = this.props;
+    const { arxiv } = this.state;
     updateTextAction(text);
-    callSearchPaper(text);
+    if (arxiv) {
+      callSearchPaperFromArxiv(text);
+    } else {
+      callSearchPaper(text);
+    }
   }
 
   render() {
-    const { searchResult, cardLayoutProps } = this.props;
+    const { searchResult, searchResultFromArxiv, cardLayoutProps } = this.props;
+    const { arxiv } = this.state;
+    const formatedSearchResultFromArxiv = searchResultFromArxiv && searchResultFromArxiv.paper ?
+      searchResultFromArxiv.paper.map((data, index) => ({
+        arxiv: [data],
+        ref: [],
+        title: data.title,
+        _id: `temp_${index}`,
+      }))
+    : null;
     return (
       <div>
         <Helmet>
-          <title>Search Result</title>
+          <title>{arxiv ? 'Search Result From arXiv' : 'Search Result'}</title>
           <meta name="description" content="Search Result" />
         </Helmet>
         <SearchResult
-          searchResult={searchResult}
+          arxiv={arxiv}
+          searchResult={arxiv ? formatedSearchResultFromArxiv : searchResult}
           goToPath={this.goToPath}
           cardLayoutProps={cardLayoutProps}
         />
@@ -75,9 +100,11 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
 
 SearchResultContainer.propTypes = {
   callSearchPaper: PropTypes.func,
+  callSearchPaperFromArxiv: PropTypes.func,
   updateTextAction: PropTypes.func,
   searchText: PropTypes.string,
   searchResult: PropTypes.array,
+  searchResultFromArxiv: PropTypes.object,
   history: PropTypes.object,
   cardLayoutProps: PropTypes.object,
   match: PropTypes.object,
@@ -87,6 +114,8 @@ const mapStateToProps = createStructuredSelector({
   searchText: makeSelectSearchText(),
   searchResult: makeSelectSearchResult(),
   searchError: makeSelectSearchError(),
+  searchResultFromArxiv: makeSelectSearchResultFromArxiv(),
+  searchErrorFromArxiv: makeSelectSearchErrorFromArxiv(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -96,6 +125,9 @@ function mapDispatchToProps(dispatch) {
     },
     callSearchPaper: (text) => {
       dispatch(searchPaper(text));
+    },
+    callSearchPaperFromArxiv: (text) => {
+      dispatch(searchPaperFromArxiv(text));
     },
   };
 }

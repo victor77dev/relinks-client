@@ -27,18 +27,17 @@ export function* updatePaperInfo(action) {
 
 export function* addPaperFromArxiv(action) {
   const { title, paperId, goToPath } = action;
+  const params = paperId.indexOf('temp') !== 0 ? { title, paperId } : { title };
   try {
     // Call addPaper api
     const addPaper = yield call(axios.get, `${apiUrl}/addPaper`, {
-      params: {
-        title,
-        paperId,
-      },
+      params,
     });
     // Call PaperAdded
     yield put(paperAdded(paperId, addPaper.data));
     yield put(getLinksDetail(paperId));
-    goToPath(`/paperLinks/${paperId}`);
+    const currenetId = addPaper.data.paperId;
+    goToPath(`/paperLinks/${currenetId}`);
   } catch (err) {
     yield put(addPaperError(paperId, err));
   }

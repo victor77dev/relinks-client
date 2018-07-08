@@ -88,8 +88,8 @@ const ReLinksCardActions = (props) => {
     text: 'Check ReLinks',
     func: checkPaperOnClick.bind(this, paperId),
   };
-  // Create Button to add paper in ReLinks
-  const addPaperButtonData = (paperData.arxiv.length === 0 && paperData.ref.length !== 0) ?
+  // Create Button to add paper in ReLinks (if arxiv data is missing or db _id is not found)
+  const addPaperButtonData = (paperId.indexOf('temp') === 0 || (paperData.arxiv.length === 0 && paperData.ref.length !== 0)) ?
   {
     id: `Add_${paperId}`,
     text: 'Add in ReLinks',

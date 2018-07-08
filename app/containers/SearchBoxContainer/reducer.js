@@ -9,12 +9,16 @@ import {
   UPDATE_TEXT,
   SEARCH_LOADED,
   SEARCH_ERROR,
+  SEARCH_ARXIV_LOADED,
+  SEARCH_ARXIV_ERROR,
 } from './constants';
 
 const initialState = fromJS({
   text: '',
   searchResult: null,
   searchError: null,
+  searchResultFromArxiv: null,
+  searchErrorFromArxiv: null,
 });
 
 function searchBoxContainerReducer(state = initialState, action) {
@@ -30,6 +34,14 @@ function searchBoxContainerReducer(state = initialState, action) {
       return state
         .set('searchResult', null)
         .set('searchError', action.error);
+    case SEARCH_ARXIV_LOADED:
+      return state
+        .set('searchResultFromArxiv', action.result)
+        .set('searchErrorFromArxiv', null);
+    case SEARCH_ARXIV_ERROR:
+      return state
+        .set('searchResultFromArxiv', null)
+        .set('searchErrorFromArxiv', action.error);
     default:
       return state;
   }

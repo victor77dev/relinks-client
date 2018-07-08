@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'app.components.SearchResult.header',
     defaultMessage: 'Search Result:',
   },
+  arxivHeader: {
+    id: 'app.components.SearchResult.header',
+    defaultMessage: 'Search Result From arXiv:',
+  },
 });
