@@ -15,33 +15,45 @@ import injectReducer from 'utils/injectReducer';
 import SearchBox from 'components/SearchBox';
 
 import { makeSelectSearchBoxText } from './selectors';
-import { updateText, searchPaper } from './actions';
+import { updateText } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
 export class SearchBoxContainer extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   onChange = this.props.onChangeText;
   onKeyPress = (event) => {
-    const { history, callSearchPaper, text } = this.props;
+    const { history, text } = this.props;
     if (event.key === 'Enter') {
-      callSearchPaper(text);
-      if (history) {
-        history.push(`/searchResult/${text}`);
-      }
+      history.push(`/searchResult/${text}`);
     }
+  }
+
+  onArxivPress = () => {
+    const { history, text } = this.props;
+    history.push(`/searchResultFromArxiv/${text}`);
+  }
+
+  onRelinksPress = () => {
+    const { history, text } = this.props;
+    history.push(`/searchResult/${text}`);
   }
 
   render() {
     const { theme } = this.props;
     return (
-      <SearchBox theme={theme} onChange={this.onChange} onKeyPress={this.onKeyPress} />
+      <SearchBox
+        theme={theme}
+        onChange={this.onChange}
+        onKeyPress={this.onKeyPress}
+        onRelinksPress={this.onRelinksPress}
+        onArxivPress={this.onArxivPress}
+      />
     );
   }
 }
 
 SearchBoxContainer.propTypes = {
   onChangeText: PropTypes.func.isRequired,
-  callSearchPaper: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   history: PropTypes.object,
   text: PropTypes.string,
@@ -55,9 +67,6 @@ function mapDispatchToProps(dispatch) {
   return {
     onChangeText: (event) => {
       dispatch(updateText(event.target.value));
-    },
-    callSearchPaper: (text) => {
-      dispatch(searchPaper(text));
     },
   };
 }

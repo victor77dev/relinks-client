@@ -17,7 +17,6 @@ import SearchResult from 'components/SearchResult/Loadable';
 import { updateText, searchPaper, searchPaperFromArxiv } from 'containers/SearchBoxContainer/actions';
 
 import {
-  makeSelectSearchText,
   makeSelectSearchResult,
   makeSelectSearchError,
   makeSelectSearchResultFromArxiv,
@@ -37,19 +36,17 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   componentDidMount() {
-    const { match, searchText } = this.props;
+    const { match } = this.props;
     const { text } = match.params;
-    if (text !== searchText && searchText === '') {
-      this.updateSearchResult(text);
-    }
+    this.updateSearchResult(text);
   }
 
   componentWillUpdate(nextProps) {
-    const { searchText } = this.props;
+    const currentText = this.props.match.params.text;
     const { match } = nextProps;
     const { params } = match;
     const { text } = params;
-    if (text !== searchText && searchText === '') {
+    if (text !== currentText || currentText === '') {
       this.updateSearchResult(text);
     }
   }
@@ -102,7 +99,6 @@ SearchResultContainer.propTypes = {
   callSearchPaper: PropTypes.func,
   callSearchPaperFromArxiv: PropTypes.func,
   updateTextAction: PropTypes.func,
-  searchText: PropTypes.string,
   searchResult: PropTypes.array,
   searchResultFromArxiv: PropTypes.object,
   history: PropTypes.object,
@@ -111,7 +107,6 @@ SearchResultContainer.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  searchText: makeSelectSearchText(),
   searchResult: makeSelectSearchResult(),
   searchError: makeSelectSearchError(),
   searchResultFromArxiv: makeSelectSearchResultFromArxiv(),
