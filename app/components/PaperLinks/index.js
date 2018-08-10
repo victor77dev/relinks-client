@@ -244,7 +244,8 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
         <Link
           paperData={data}
           linkType="current"
-          key={data._id}
+          // Avoid React unique key error (if id is undefined, set it to null)
+          key={data._id ? data._id : null}
           goToPath={goToPath}
           cardLayoutProps={cardLayoutProps}
         />

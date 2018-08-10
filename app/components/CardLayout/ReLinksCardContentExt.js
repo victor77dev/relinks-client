@@ -38,10 +38,11 @@ class ReLinksCardContentExt extends React.PureComponent {
 
   render() {
     const { paperData, classes } = this.props;
-    if (paperData.arxiv.length === 0 || !(paperData.arxiv[0].summary)) {
+    const { arxiv } = paperData;
+    if ((!arxiv || arxiv.length === 0) || !(arxiv[0].summary)) {
       return null;
     }
-    const { summary } = paperData.arxiv[0];
+    const { summary } = arxiv[0];
     return (
       <CardContent>
         <CardActions>

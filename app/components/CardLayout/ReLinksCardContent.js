@@ -37,6 +37,7 @@ class ReLinksCardContent extends React.PureComponent {
 
   render() {
     const { paperData, linkDetail, linkType, classes } = this.props;
+    const { arxiv, ref } = paperData;
     let foundParagraph;
     if (linkDetail && linkDetail.details) {
       foundParagraph = linkDetail.details.foundParagraph || null;
@@ -46,7 +47,7 @@ class ReLinksCardContent extends React.PureComponent {
     const titleStyle = 'title';
     const cardTitle = (linkType !== 'current') && <Typography variant={titleStyle}>Found Paragraph</Typography>;
     // Card Content Info
-    const infoSrc = (paperData.arxiv.length !== 0) ? 'arXiv' : 'reference';
+    const infoSrc = (arxiv && arxiv.length !== 0) ? 'arXiv' : 'reference';
     const cardInfoStr = linkDetail ? foundParagraph : `Information from ${infoSrc}.`;
     const cardInfo = <Typography variant={paragraphStyle}>{cardInfoStr}</Typography>;
     const cardButton = (
@@ -71,11 +72,11 @@ class ReLinksCardContent extends React.PureComponent {
         </CardContent>
       </Collapse>
     );
-    if (paperData.arxiv.length !== 0) {
+    if (arxiv && arxiv.length !== 0) {
       // Create CardContent with found paragraph and paper summary (Link to arXiv, Link to PDF)
-      const paperLink = paperData.arxiv[0].link;
+      const paperLink = arxiv[0].link;
       const cardLink = paperLink ? <Typography variant={paragraphStyle}>Link: <a href={paperLink} target="_blank">{paperLink}</a></Typography> : '';
-      const paperPdf = paperData.arxiv[0].pdf;
+      const paperPdf = arxiv[0].pdf;
       const cardPdf = paperPdf ? <Typography variant={paragraphStyle}>Pdf: <a href={paperPdf} target="_blank">{paperPdf}</a></Typography> : '';
       return (
         <CardContent>
@@ -85,7 +86,7 @@ class ReLinksCardContent extends React.PureComponent {
           {linkDetail ? cardContent : cardInfo}
         </CardContent>
       );
-    } else if (paperData.ref.length !== 0) {
+    } else if (ref && ref.length !== 0) {
       // Create CardContent for reference data (Info)
       return (
         <CardContent>

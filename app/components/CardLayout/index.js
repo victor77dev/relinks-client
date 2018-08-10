@@ -33,10 +33,11 @@ class CardLayout extends React.PureComponent {
 
   // Get authors name from arxiv data; if not exists, find in ref data
   getAuthors = (paperData) => {
-    if (paperData.arxiv.length !== 0) {
-      return paperData.arxiv[0].author.reduce((string, author) => string === '' ? author : `${string}, ${author}`, '');
-    } else if (paperData.ref.length !== 0) {
-      return paperData.ref[0].authors.reduce((string, author) => string === '' ? author : `${string}, ${author}`, '');
+    const { arxiv, ref } = paperData;
+    if (arxiv && arxiv.length !== 0) {
+      return arxiv[0].author.reduce((string, author) => string === '' ? author : `${string}, ${author}`, '');
+    } else if (ref && ref.length !== 0) {
+      return ref[0].authors.reduce((string, author) => string === '' ? author : `${string}, ${author}`, '');
     }
     return 'No Authors data in ReLinks.';
   }
@@ -68,6 +69,13 @@ class CardLayout extends React.PureComponent {
     const { title } = paperData;
     /* eslint-disable no-underscore-dangle */
     const paperId = paperData._id;
+    if (!paperId) {
+      return (
+        <MuiThemeProvider theme={theme}>
+          <h3 key="paperNotFound">Cannot find this paper in ReLinks</h3>
+        </MuiThemeProvider>
+      );
+    }
     const authors = this.getAuthors(paperData);
     const { editPaper, editMode, editStarted } = editModeData;
     const currEditMode = paperId === editPaper ? editMode : false;

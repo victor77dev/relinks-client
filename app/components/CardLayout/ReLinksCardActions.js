@@ -80,6 +80,7 @@ const ReLinksCardActions = (props) => {
   };
 
   const { paperData, classes, addingPaper } = props;
+  const { arxiv, ref } = paperData;
   const variant = 'contained';
   const paperId = paperData._id;
   // Create Button to go to Paper Links in ReLinks
@@ -89,7 +90,9 @@ const ReLinksCardActions = (props) => {
     func: checkPaperOnClick.bind(this, paperId),
   };
   // Create Button to add paper in ReLinks (if arxiv data is missing or db _id is not found)
-  const addPaperButtonData = (paperId.indexOf('temp') === 0 || (paperData.arxiv.length === 0 && paperData.ref.length !== 0)) ?
+  const arxivDataExist = arxiv && arxiv.length !== 0;
+  const refDataExist = ref && ref.length !== 0;
+  const addPaperButtonData = (paperId.indexOf('temp') === 0 || (!arxivDataExist && refDataExist)) ?
   {
     id: `Add_${paperId}`,
     text: 'Add in ReLinks',
