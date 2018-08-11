@@ -13,6 +13,7 @@ import {
   ADD_PAPER,
   PAPER_ADDED,
   ADD_PAPER_ERROR,
+  UPDATE_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -20,6 +21,7 @@ const initialState = fromJS({
   editMode: false,
   editStarted: false,
   addingPaper: {},
+  errorMsg: null,
 });
 
 function cardLayoutContainerReducer(state = initialState, action) {
@@ -40,13 +42,19 @@ function cardLayoutContainerReducer(state = initialState, action) {
         .set('editStarted', false);
     case ADD_PAPER:
       return state
+        .set('errorMsg', null)
         .update('addingPaper', (map) => map.update(action.paperId, () => true));
     case PAPER_ADDED:
       return state
+        .set('errorMsg', null)
         .update('addingPaper', (map) => map.update(action.paperId, () => false));
     case ADD_PAPER_ERROR:
       return state
+        .set('errorMsg', action.error)
         .update('addingPaper', (map) => map.update(action.paperId, () => false));
+    case UPDATE_ERROR:
+      return state
+        .set('errorMsg', action.error);
     default:
       return state;
   }

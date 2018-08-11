@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Paper from 'components/Paper';
+import MessageBoxContainer from 'containers/MessageBoxContainer';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -16,7 +17,7 @@ import messages from './messages';
 /* eslint-disable no-underscore-dangle */
 class SearchResult extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { searchResult, goToPath, cardLayoutProps, arxiv } = this.props;
+    const { searchResult, goToPath, cardLayoutProps, arxiv, errorMsg } = this.props;
     let paperList;
     if (!searchResult || searchResult.length === 0) {
       paperList = <h3>Cannot find related paper in ReLinks</h3>;
@@ -34,6 +35,7 @@ class SearchResult extends React.PureComponent { // eslint-disable-line react/pr
 
     return (
       <div>
+        <MessageBoxContainer errorMsg={errorMsg} />
         <h1>
           <FormattedMessage {...header} />
         </h1>
@@ -48,6 +50,7 @@ SearchResult.propTypes = {
   goToPath: PropTypes.func,
   cardLayoutProps: PropTypes.object,
   arxiv: PropTypes.bool,
+  errorMsg: PropTypes.object,
 };
 
 export default SearchResult;

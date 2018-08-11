@@ -20,6 +20,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 import grey from '@material-ui/core/colors/grey';
 
 import Link from 'components/Link';
+import MessageBoxContainer from 'containers/MessageBoxContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -196,7 +197,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
   }
 
   render() {
-    const { paperLink, goToPath, classes, cardLayoutProps } = this.props;
+    const { paperLink, goToPath, classes, cardLayoutProps, errorMsg } = this.props;
     const currLineStart = this.state.currLinkDivWidth * 0.02;
     const currLineEnd = this.state.currLinkDivWidth * 0.1;
     const currLineMiddle = this.state.currLinkDivHeight / 2;
@@ -273,6 +274,7 @@ class PaperLinks extends React.PureComponent { // eslint-disable-line react/pref
 
     return (
       <div>
+        <MessageBoxContainer errorMsg={errorMsg} />
         <ReLinksPrev prevPaperList={prevPaperList} paperNotFound={!paperLink || paperLink.length === 0} classes={classes} />
         <div className={classes.links} ref={(elem) => { this.currLinkDiv = elem; }}>
           {currPaperList.length > 0 && currLine}
@@ -294,6 +296,7 @@ PaperLinks.propTypes = {
   goToPath: PropTypes.func,
   classes: PropTypes.object,
   cardLayoutProps: PropTypes.object,
+  errorMsg: PropTypes.object,
 };
 
 export default withStyles(styles)(PaperLinks);

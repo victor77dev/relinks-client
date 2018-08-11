@@ -32,8 +32,17 @@ const makeSelectCardLayoutAddMode = () => createSelector(
   }
 );
 
+const makeSelectCardLayoutErrorMsg = () => createSelector(
+  selectCardLayoutContainerDomain,
+  (cardModeState) => {
+    const errorMsg = cardModeState.get('errorMsg');
+    return errorMsg;
+  }
+);
+
 export {
   selectCardLayoutContainerDomain,
   makeSelectCardLayoutEditMode,
   makeSelectCardLayoutAddMode,
+  makeSelectCardLayoutErrorMsg,
 };

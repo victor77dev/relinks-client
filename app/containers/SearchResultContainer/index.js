@@ -15,6 +15,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import SearchResult from 'components/SearchResult/Loadable';
 import { updateText, searchPaper, searchPaperFromArxiv } from 'containers/SearchBoxContainer/actions';
+import { makeSelectCardLayoutErrorMsg } from 'containers/CardLayoutContainer/selectors';
 
 import {
   makeSelectSearchResult,
@@ -68,7 +69,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   render() {
-    const { searchResult, searchResultFromArxiv, cardLayoutProps } = this.props;
+    const { searchResult, searchResultFromArxiv, cardLayoutProps, errorMsg } = this.props;
     const { arxiv } = this.state;
     const formatedSearchResultFromArxiv = searchResultFromArxiv && searchResultFromArxiv.paper ?
       searchResultFromArxiv.paper.map((data, index) => ({
@@ -89,6 +90,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
           searchResult={arxiv ? formatedSearchResultFromArxiv : searchResult}
           goToPath={this.goToPath}
           cardLayoutProps={cardLayoutProps}
+          errorMsg={errorMsg}
         />
       </div>
     );
@@ -104,6 +106,7 @@ SearchResultContainer.propTypes = {
   history: PropTypes.object,
   cardLayoutProps: PropTypes.object,
   match: PropTypes.object,
+  errorMsg: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -111,6 +114,7 @@ const mapStateToProps = createStructuredSelector({
   searchError: makeSelectSearchError(),
   searchResultFromArxiv: makeSelectSearchResultFromArxiv(),
   searchErrorFromArxiv: makeSelectSearchErrorFromArxiv(),
+  errorMsg: makeSelectCardLayoutErrorMsg(),
 });
 
 function mapDispatchToProps(dispatch) {

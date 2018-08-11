@@ -14,6 +14,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import PaperLinks from 'components/PaperLinks/Loadable';
+import { makeSelectCardLayoutErrorMsg } from 'containers/CardLayoutContainer/selectors';
 import { makeSelectPaperLinkResult, makeSelectPaperLinkError } from './selectors';
 import { getLinksDetail } from './actions';
 import reducer from './reducer';
@@ -46,7 +47,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
   }
 
   render() {
-    const { paperLink, match, cardLayoutProps } = this.props;
+    const { paperLink, match, cardLayoutProps, errorMsg } = this.props;
     const { paperId } = match.params;
     return (
       <div>
@@ -59,6 +60,7 @@ export class PaperLinksContainer extends React.PureComponent { // eslint-disable
           paperLink={paperLink}
           goToPath={this.goToPath}
           cardLayoutProps={cardLayoutProps}
+          errorMsg={errorMsg}
         />
       </div>
     );
@@ -71,11 +73,13 @@ PaperLinksContainer.propTypes = {
   history: PropTypes.object,
   cardLayoutProps: PropTypes.object,
   callGetLinksDetail: PropTypes.func,
+  errorMsg: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   paperLink: makeSelectPaperLinkResult(),
   paperLinkError: makeSelectPaperLinkError(),
+  errorMsg: makeSelectCardLayoutErrorMsg(),
 });
 
 function mapDispatchToProps(dispatch) {

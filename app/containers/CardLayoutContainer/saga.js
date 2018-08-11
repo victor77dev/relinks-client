@@ -37,9 +37,11 @@ export function* addPaperFromArxiv(action) {
     yield put(paperAdded(paperId, addPaper.data));
     yield put(getLinksDetail(paperId));
     const currenetId = addPaper.data.paperId;
+    if (currenetId === null) throw new Error('Fail to add paper');
     goToPath(`/paperLinks/${currenetId}`);
   } catch (err) {
-    yield put(addPaperError(paperId, err));
+    const errorMsg = { err: err.toString(), title };
+    yield put(addPaperError(paperId, errorMsg));
   }
 }
 
