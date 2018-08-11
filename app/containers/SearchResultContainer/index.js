@@ -69,7 +69,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
   }
 
   render() {
-    const { searchResult, searchResultFromArxiv, cardLayoutProps, errorMsg } = this.props;
+    const { searchResult, searchResultFromArxiv, cardLayoutProps, errorMsg, searchError } = this.props;
     const { arxiv } = this.state;
     const formatedSearchResultFromArxiv = searchResultFromArxiv && searchResultFromArxiv.paper ?
       searchResultFromArxiv.paper.map((data, index) => ({
@@ -88,6 +88,7 @@ export class SearchResultContainer extends React.PureComponent { // eslint-disab
         <SearchResult
           arxiv={arxiv}
           searchResult={arxiv ? formatedSearchResultFromArxiv : searchResult}
+          searchError={searchError}
           goToPath={this.goToPath}
           cardLayoutProps={cardLayoutProps}
           errorMsg={errorMsg}
@@ -102,6 +103,7 @@ SearchResultContainer.propTypes = {
   callSearchPaperFromArxiv: PropTypes.func,
   updateTextAction: PropTypes.func,
   searchResult: PropTypes.array,
+  searchError: PropTypes.object,
   searchResultFromArxiv: PropTypes.object,
   history: PropTypes.object,
   cardLayoutProps: PropTypes.object,

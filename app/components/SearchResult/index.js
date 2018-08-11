@@ -17,7 +17,7 @@ import messages from './messages';
 /* eslint-disable no-underscore-dangle */
 class SearchResult extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { searchResult, goToPath, cardLayoutProps, arxiv, errorMsg } = this.props;
+    const { searchResult, goToPath, cardLayoutProps, arxiv, errorMsg, searchError } = this.props;
     let paperList;
     if (!searchResult || searchResult.length === 0) {
       paperList = <h3>Cannot find related paper in ReLinks</h3>;
@@ -30,6 +30,9 @@ class SearchResult extends React.PureComponent { // eslint-disable-line react/pr
           cardLayoutProps={cardLayoutProps}
         />
       ));
+    }
+    if (searchResult === null && searchError === null) {
+      paperList = <h3>Loading...</h3>;
     }
     const header = arxiv ? { ...messages.arxivHeader } : { ...messages.header };
 
@@ -47,6 +50,7 @@ class SearchResult extends React.PureComponent { // eslint-disable-line react/pr
 
 SearchResult.propTypes = {
   searchResult: PropTypes.array,
+  searchError: PropTypes.object,
   goToPath: PropTypes.func,
   cardLayoutProps: PropTypes.object,
   arxiv: PropTypes.bool,
